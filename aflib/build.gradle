@@ -26,4 +26,90 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation rootProject.ext.dependencies['appcompat-v7']
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    //test
+    testImplementation rootProject.ext.dependencies['junit']
+    androidTestImplementation rootProject.ext.dependencies['runner']
+    androidTestImplementation rootProject.ext.dependencies['espresso-core']
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+    //LeakCanary
+    debugImplementation rootProject.ext.dependencies['canary-debug']
+    releaseImplementation rootProject.ext.dependencies['canary-release']
+
+    //httpLog
+    debugImplementation(rootProject.ext.dependencies['loggingInterceptor']) {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    //fragmentation
+    implementation rootProject.ext.dependencies["fragmentation"]
+    implementation rootProject.ext.dependencies["fragmentation-core"]
+    implementation rootProject.ext.dependencies["fragmentation-swipeback"]
+    //implementation rootProject.ext.dependencies["eventbus-activity-scope"]
+
+    //eventbus 解耦通讯
+    implementation rootProject.ext.dependencies["androideventbus"]
+
+    //glide
+    implementation(rootProject.ext.dependencies["glide"]) {
+        exclude group: 'com.android.support'
+    }
+
+    //retrofit
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation (rootProject.ext.dependencies["retrofit-converter-gson"]){
+        exclude group:'com.squareup.retrofit2'
+    }
+    implementation (rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+        transitive = false
+    }
+
+    //rxjava
+    implementation (rootProject.ext.dependencies["rxjava2"]){
+        exclude group: 'annotation'
+    }
+    implementation (rootProject.ext.dependencies["rxandroid2"]){
+        exclude group: 'io.reactivex.rxjava2'
+    }
+    implementation(rootProject.ext.dependencies["rxlifecycle2"]) {
+        exclude group: 'io.reactivex.rxjava2'
+    }
+
+    //rxcache
+    implementation (rootProject.ext.dependencies["rxcache2"]){
+        exclude group: 'io.reactivex.rxjava2'
+    }
+
+    //rxbinding
+    implementation (rootProject.ext.dependencies["rxbinding2"]){
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+    }
+    implementation (rootProject.ext.dependencies["rxbinding2-appcompat-v7"]){
+        exclude module: 'rxandroid'
+        exclude module: 'rxbinding'
+    }
+    implementation (rootProject.ext.dependencies["rxbinding2-design"]){
+        exclude module: 'rxandroid'
+        exclude module: 'rxbinding'
+        exclude module: 'support-compat'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-fragment'
+        exclude module: 'support-core-ui'
+        exclude module: 'support-core-utils'
+    }
+
+    //LrecyclerView
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+
+    //butterKnife
+    implementation (rootProject.ext.dependencies['butterknife']){
+        exclude group:'com.android.support'
+    }
+    annotationProcessor  rootProject.ext.dependencies['butterknife-compiler']
 }
