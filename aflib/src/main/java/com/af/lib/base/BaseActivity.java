@@ -1,9 +1,10 @@
-package com.af.lib.activity;
+package com.af.lib.base;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class BaseActivity extends AppCompatActivity {
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class BaseActivity extends SupportActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

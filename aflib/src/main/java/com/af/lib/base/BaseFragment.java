@@ -1,4 +1,4 @@
-package com.af.lib.fragment;
+package com.af.lib.base;
 
 import android.content.Context;
 import android.net.Uri;

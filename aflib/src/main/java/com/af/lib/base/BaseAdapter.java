@@ -1,4 +1,4 @@
-package com.af.lib.adapter;
+package com.af.lib.base;
 
 /**
  * User: tourdt（tourdt@qq.com)
