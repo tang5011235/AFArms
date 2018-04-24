@@ -28,14 +28,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    api 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //implementation rootProject.ext.dependencies['appcompat-v7']
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies['appcompat-v7']
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
 
     //test
     implementation 'com.android.support:support-v4:26.1.0'
@@ -45,45 +40,45 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
 
     //LeakCanary
-    debugImplementation rootProject.ext.dependencies['canary-debug']
-    releaseImplementation rootProject.ext.dependencies['canary-release']
+    debugApi rootProject.ext.dependencies['canary-debug']
+    releaseApi rootProject.ext.dependencies['canary-release']
 
     //httpLog
-    debugImplementation(rootProject.ext.dependencies['loggingInterceptor']) {
+    debugApi(rootProject.ext.dependencies['loggingInterceptor']) {
         exclude group: 'org.json', module: 'json'
     }
 
     //fragmentation
-    implementation rootProject.ext.dependencies["fragmentation"]
-    implementation rootProject.ext.dependencies["fragmentation-core"]
-    implementation rootProject.ext.dependencies["fragmentation-swipeback"]
+    api rootProject.ext.dependencies["fragmentation"]
+    api rootProject.ext.dependencies["fragmentation-core"]
+    api rootProject.ext.dependencies["fragmentation-swipeback"]
     //implementation rootProject.ext.dependencies["eventbus-activity-scope"]
 
     //eventbus 解耦通讯
-    implementation rootProject.ext.dependencies["androideventbus"]
+    api rootProject.ext.dependencies["androideventbus"]
 
     //glide
-    implementation(rootProject.ext.dependencies["glide"]) {
+    api(rootProject.ext.dependencies["glide"]) {
         exclude group: 'com.android.support'
     }
 
     //retrofit
-    implementation rootProject.ext.dependencies["retrofit"]
-    implementation(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+    api rootProject.ext.dependencies["retrofit"]
+    api(rootProject.ext.dependencies["retrofit-converter-gson"]) {
         exclude group: 'com.squareup.retrofit2'
     }
-    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+    api(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
         transitive = false
     }
 
     //rxjava
-    implementation(rootProject.ext.dependencies["rxjava2"]) {
+    api(rootProject.ext.dependencies["rxjava2"]) {
         exclude group: 'annotation'
     }
-    implementation(rootProject.ext.dependencies["rxandroid2"]) {
+    api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude group: 'io.reactivex.rxjava2'
     }
-    implementation(rootProject.ext.dependencies["rxlifecycle2"]) {
+    api(rootProject.ext.dependencies["rxlifecycle2"]) {
         exclude group: 'io.reactivex.rxjava2'
     }
 
@@ -93,18 +88,18 @@ dependencies {
     }
 
     //rxbinding
-    implementation(rootProject.ext.dependencies["rxbinding2"]) {
+    api(rootProject.ext.dependencies["rxbinding2"]) {
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
         exclude module: 'com.android.support'
         exclude module: 'support-annotations'
     }
-    implementation(rootProject.ext.dependencies["rxbinding2-appcompat-v7"]) {
+    api(rootProject.ext.dependencies["rxbinding2-appcompat-v7"]) {
         exclude module: 'rxandroid'
         exclude module: 'rxbinding'
         exclude group: 'com.android.support'
     }
-    implementation(rootProject.ext.dependencies["rxbinding2-design"]) {
+    api(rootProject.ext.dependencies["rxbinding2-design"]) {
         exclude module: 'rxandroid'
         exclude module: 'rxbinding'
         exclude module: 'support-compat'
@@ -116,12 +111,12 @@ dependencies {
     }
 
     //LrecyclerView
-    implementation rootProject.ext.dependencies["LRecyclerView"]
+    api rootProject.ext.dependencies["LRecyclerView"]
 
     //MultipleStatusView
     implementation rootProject.ext.dependencies["multiple-status-view"]
     //butterKnife
-    implementation(rootProject.ext.dependencies['butterknife']) {
+    api(rootProject.ext.dependencies['butterknife']) {
         exclude group: 'com.android.support'
     }
     annotationProcessor rootProject.ext.dependencies['butterknife-compiler']
