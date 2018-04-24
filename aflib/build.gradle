@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-
-
+    compileSdkVersion rootProject.ext.android['compileSdkVersion']
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android['minSdkVersion']
+        targetSdkVersion rootProject.ext.android['targetSdkVersion']
+        versionCode rootProject.ext.android['versionCode']
+        versionName rootProject.ext.android['versionName']
     }
 
     buildTypes {
@@ -24,7 +22,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -89,10 +87,13 @@ dependencies {
     implementation (rootProject.ext.dependencies["rxbinding2"]){
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
+        exclude module: 'com.android.support'
+        exclude module: 'support-annotations'
     }
     implementation (rootProject.ext.dependencies["rxbinding2-appcompat-v7"]){
         exclude module: 'rxandroid'
         exclude module: 'rxbinding'
+        exclude group: 'com.android.support'
     }
     implementation (rootProject.ext.dependencies["rxbinding2-design"]){
         exclude module: 'rxandroid'
@@ -102,11 +103,15 @@ dependencies {
         exclude module: 'support-fragment'
         exclude module: 'support-core-ui'
         exclude module: 'support-core-utils'
+        exclude module: 'support-annotations'
     }
 
     //LrecyclerView
-    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+    implementation rootProject.ext.dependencies["LRecyclerView"]
 
+
+    //MultipleStatusView
+    implementation rootProject.ext.dependencies["multiple-status-view"]
     //butterKnife
     implementation (rootProject.ext.dependencies['butterknife']){
         exclude group:'com.android.support'
