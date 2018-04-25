@@ -1,5 +1,6 @@
 package com.af.lib.http.convert;
 
+import com.af.lib.http.response.interfaces.IResponse;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -16,7 +17,7 @@ import retrofit2.Retrofit;
 public class CustomGsonConverterFactory extends Converter.Factory {
 
     private final Gson gson;
-    private final Class clazz;
+    private final Class<? extends IResponse> clazz;
 
     private CustomGsonConverterFactory(Gson gson, Class clazz) {
         if (gson == null) {
@@ -26,7 +27,7 @@ public class CustomGsonConverterFactory extends Converter.Factory {
         this.clazz = clazz;
     }
 
-    public static CustomGsonConverterFactory create(Gson gson, Class clazz) {
+    public static CustomGsonConverterFactory create(Gson gson, Class<? extends IResponse> clazz) {
         return new CustomGsonConverterFactory(gson, clazz);
     }
 

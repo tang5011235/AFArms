@@ -34,4 +34,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':aflib')
+
+    //LeakCanary
+    debugApi rootProject.ext.dependencies['canary-debug']
+    releaseApi rootProject.ext.dependencies['canary-release']
+
+    //LrecyclerView
+    api rootProject.ext.dependencies["LRecyclerView"]
 }

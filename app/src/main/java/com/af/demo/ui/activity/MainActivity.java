@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        RetrofitClient.getInstance(BaseResponse.class).getRetrofit()
+        RetrofitClient.getInstance().getRetrofit()
                 .create(GankIoServices.class)
                 .getFuLi()
                 .subscribeOn(Schedulers.io())

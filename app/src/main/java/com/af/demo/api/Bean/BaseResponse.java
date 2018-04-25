@@ -1,12 +1,12 @@
 package com.af.demo.api.Bean;
 
-import com.af.lib.http.response.imp.HttpResponse;
+import com.af.lib.http.response.interfaces.IResponse;
 
 /**
  * Created by Administrator on 2017/11/27.
  */
 
-public class BaseResponse<T> extends HttpResponse{
+public class BaseResponse<T> implements IResponse{
     private int code = 101;
     private String message;
     private boolean erro;

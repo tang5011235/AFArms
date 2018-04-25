@@ -26,6 +26,14 @@ public class RetrofitClient {
                 .client(mOkHttpBuilder.build());
     }
 
+
+    public static RetrofitClient getInstance(){
+        if (mRetrofitClient == null) {
+            throw new  IllegalArgumentException("mRetrofitClient is null,firstly invoke method getInstance(Class<? extends IResponse> ic)");
+        }
+        return mRetrofitClient;
+    }
+
     public static RetrofitClient getInstance(Class<? extends IResponse> ic) {
         synchronized (RetrofitClient.class) {
             if (mRetrofitClient == null) {
@@ -34,6 +42,8 @@ public class RetrofitClient {
         }
         return mRetrofitClient;
     }
+
+
 
     public Retrofit.Builder getRetrofitBuilder() {
         return mRetrofitBuilder;
