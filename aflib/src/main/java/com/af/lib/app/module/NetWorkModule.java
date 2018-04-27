@@ -1,4 +1,4 @@
-package com.af.lib.app;
+package com.af.lib.app.module;
 
 import android.app.Application;
 
@@ -31,7 +31,9 @@ public class NetWorkModule {
      */
     @Singleton
     @Provides
-    static Retrofit provideRetrofit(Application application, OkHttpClient okHttpClient, RetrofitConfiguration retrofitConfiguration) {
+    static Retrofit provideRetrofit(Application application,
+                                    OkHttpClient okHttpClient,
+                                    RetrofitConfiguration retrofitConfiguration) {
         Retrofit.Builder builder = new Retrofit.Builder();
         if (retrofitConfiguration != null) {
             retrofitConfiguration.configRetrofit(application, builder);

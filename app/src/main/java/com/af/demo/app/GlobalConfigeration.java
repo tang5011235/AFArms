@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.af.demo.api.Bean.BaseResponse;
 import com.af.lib.BuildConfig;
-import com.af.lib.app.GlobalConfigModule;
-import com.af.lib.app.NetWorkModule;
+import com.af.lib.app.module.GlobalConfigModule;
+import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.app.interfaces.AppLifeCycleCallbacks;
 import com.af.lib.app.interfaces.ConfigModule;
 import com.af.lib.http.convert.CustomGsonConverterFactory;
@@ -23,6 +23,9 @@ import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+/**
+ * 初始化全局参数
+ */
 public class GlobalConfigeration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
@@ -50,7 +53,8 @@ public class GlobalConfigeration implements ConfigModule {
                 .setMRetrofitConfiguration(new NetWorkModule.RetrofitConfiguration() {
                     @Override
                     public void configRetrofit(Application application, Retrofit.Builder builder) {
-                        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        builder.baseUrl("https://easy-mock.com/mock/5adf28008017f454bb7bfe63/afapi/")
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .addConverterFactory(CustomGsonConverterFactory.create(new Gson(), BaseResponse.class));
                     }
                 });

@@ -1,4 +1,4 @@
-package com.af.lib.app;
+package com.af.lib.app.module;
 
 import java.io.File;
 
@@ -66,4 +66,5 @@ public class GlobalConfigModule {
     NetWorkModule.RetrofitConfiguration  providerRetrofitConfiguration(){
         return mRetrofitConfiguration;
     }
+
 }

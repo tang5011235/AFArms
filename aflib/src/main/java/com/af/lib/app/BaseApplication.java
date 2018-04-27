@@ -2,15 +2,19 @@ package com.af.lib.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import com.af.lib.app.component.AppComponent;
+import com.af.lib.app.interfaces.App;
 import com.af.lib.app.interfaces.AppLifeCycleCallbacks;
+import com.af.lib.utils.Preconditions;
 
 /**
  * User: tourdt（tourdt@qq.com)
  * Date: 2018-04-24
  * Time: 12:01
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends Application implements App{
     private AppLifeCycleCallbacks mAppDelegate;
 
     /**
@@ -44,4 +48,11 @@ public class BaseApplication extends Application {
         }
     }
 
+    @NonNull
+    @Override
+    public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppDelegate, "%s cannot be null", AppDelegate.class.getName());
+        Preconditions.checkState(mAppDelegate instanceof App, "%s must be implements %s", AppDelegate.class.getName(), App.class.getName());
+        return ((App) mAppDelegate).getAppComponent();
+    }
 }

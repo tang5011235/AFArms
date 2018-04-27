@@ -1,11 +1,11 @@
-package com.af.lib.app.interfaces;
+package com.af.lib.app.component;
 
 import android.app.Application;
 
 import com.af.lib.app.AppDelegate;
-import com.af.lib.app.AppModule;
-import com.af.lib.app.GlobalConfigModule;
-import com.af.lib.app.NetWorkModule;
+import com.af.lib.app.module.AppModule;
+import com.af.lib.app.module.GlobalConfigModule;
+import com.af.lib.app.module.NetWorkModule;
 
 import javax.inject.Singleton;
 

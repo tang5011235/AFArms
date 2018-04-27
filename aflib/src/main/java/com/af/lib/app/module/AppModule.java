@@ -1,7 +1,10 @@
-package com.af.lib.app;
+package com.af.lib.app.module;
 
 import android.app.Application;
 import android.support.v4.app.FragmentManager;
+
+import com.af.lib.app.ActivityLifeCycle;
+import com.af.lib.app.FragmentLifcycle;
 
 import java.util.ArrayList;
 import java.util.List;

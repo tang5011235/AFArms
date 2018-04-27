@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
-import com.af.lib.app.GlobalConfigModule;
+import com.af.lib.app.module.GlobalConfigModule;
 
 import java.util.List;
 
