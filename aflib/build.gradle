@@ -114,4 +114,9 @@ dependencies {
         exclude group: 'com.android.support'
     }
     annotationProcessor rootProject.ext.dependencies['butterknife-compiler']
+
+    //dagger
+    compileOnly rootProject.ext.dependencies["javax.annotation"]
+    api rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
 }
