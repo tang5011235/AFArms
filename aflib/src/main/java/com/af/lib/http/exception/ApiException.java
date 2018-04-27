@@ -1,4 +1,4 @@
-package com.af.lib.http;
+package com.af.lib.http.exception;
 
 public class ApiException extends RuntimeException {
     private int mErrorCode;

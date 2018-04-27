@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.af.lib.app;
+package com.af.lib.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.af.lib.app.interfaces.ConfigModule;
+import com.af.lib.app.lifcycles.ConfigModule;
 
 import java.util.ArrayList;
 import java.util.List;

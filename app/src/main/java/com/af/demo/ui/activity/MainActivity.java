@@ -8,7 +8,7 @@ import com.af.demo.api.Bean.BaseResponse;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.app.component.AppComponent;
-import com.af.lib.app.interfaces.App;
+import com.af.lib.app.App;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
 
 import java.util.List;

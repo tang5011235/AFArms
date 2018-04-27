@@ -3,8 +3,8 @@ package com.af.lib.app.module;
 import android.app.Application;
 import android.support.v4.app.FragmentManager;
 
-import com.af.lib.app.ActivityLifeCycle;
-import com.af.lib.app.FragmentLifcycle;
+import com.af.lib.app.lifcycles.imp.ActivityLifeCycleImp;
+import com.af.lib.app.lifcycles.FragmentLifcycle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public abstract class AppModule {
 
 
     @Binds
-    abstract Application.ActivityLifecycleCallbacks bindActivityLifeCycle(ActivityLifeCycle activityLifeCycle);
+    abstract Application.ActivityLifecycleCallbacks bindActivityLifeCycle(ActivityLifeCycleImp activityLifeCycleImp);
 
     @Binds
     abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifcycle fragmentLifcycle);

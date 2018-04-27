@@ -1,4 +1,4 @@
-package com.af.lib.app.interfaces;
+package com.af.lib.app.lifcycles;
 
 import android.app.Application;
 import android.content.Context;

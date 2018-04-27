@@ -1,4 +1,4 @@
-package com.af.lib.app.interfaces;
+package com.af.lib.app;
 
 import android.support.annotation.NonNull;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.af.lib.app.interfaces;
+package com.af.lib.app.lifcycles;
 
 import android.app.Application;
 import android.content.Context;

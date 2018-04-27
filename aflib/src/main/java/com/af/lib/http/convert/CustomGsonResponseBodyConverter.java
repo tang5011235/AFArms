@@ -1,6 +1,6 @@
 package com.af.lib.http.convert;
 
-import com.af.lib.http.ApiException;
+import com.af.lib.http.exception.ApiException;
 import com.af.lib.http.response.interfaces.IResponse;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

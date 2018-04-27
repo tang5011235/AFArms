@@ -3,7 +3,7 @@ package com.af.lib.http.exception.imp;
 import android.content.Context;
 import android.net.ParseException;
 
-import com.af.lib.http.ApiException;
+import com.af.lib.http.exception.ApiException;
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;

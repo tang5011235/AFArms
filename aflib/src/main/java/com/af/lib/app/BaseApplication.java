@@ -5,8 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.af.lib.app.component.AppComponent;
-import com.af.lib.app.interfaces.App;
-import com.af.lib.app.interfaces.AppLifeCycleCallbacks;
+import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
 import com.af.lib.utils.Preconditions;
 
 /**

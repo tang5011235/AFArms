@@ -1,4 +1,4 @@
-package com.af.lib.app;
+package com.af.lib.app.lifcycles;
 
 import android.support.v4.app.FragmentManager;
 

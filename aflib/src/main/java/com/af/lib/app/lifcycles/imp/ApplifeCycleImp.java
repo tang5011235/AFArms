@@ -1,11 +1,11 @@
-package com.af.lib.app;
+package com.af.lib.app.lifcycles.imp;
 
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.af.lib.BuildConfig;
-import com.af.lib.app.interfaces.AppLifeCycleCallbacks;
+import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
 
 import timber.log.Timber;
 

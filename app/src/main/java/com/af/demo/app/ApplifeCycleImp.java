@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.af.lib.app.interfaces.AppLifeCycleCallbacks;
+import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
 
 public class ApplifeCycleImp implements AppLifeCycleCallbacks {
     @Override

@@ -1,4 +1,4 @@
-package com.af.lib.app;
+package com.af.lib.app.lifcycles.imp;
 
 import android.app.Activity;
 import android.app.Application;
@@ -17,7 +17,7 @@ import timber.log.Timber;
  * 框架内部的activityLifeCycle用于做一些关于activity的统一操作
  */
 @Singleton
-public class ActivityLifeCycle implements Application.ActivityLifecycleCallbacks {
+public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallbacks {
     @Inject
     List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycleCallbacks;
 
@@ -26,7 +26,7 @@ public class ActivityLifeCycle implements Application.ActivityLifecycleCallbacks
     FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallback;
 
     @Inject
-    public ActivityLifeCycle() {
+    public ActivityLifeCycleImp() {
 
     }
 
