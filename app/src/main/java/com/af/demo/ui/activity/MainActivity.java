@@ -7,10 +7,9 @@ import com.af.demo.R;
 import com.af.demo.api.Bean.BaseResponse;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.service.GankIoServices;
+import com.af.lib.app.component.AppComponent;
 import com.af.lib.app.interfaces.App;
-import com.af.lib.http.exception.imp.ResponseErrorListenerImpl;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
-import com.af.lib.http.exception.rxjava.RxErrorHandler;
 
 import java.util.List;
 
@@ -26,17 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RxErrorHandler mRxErrorHandler = RxErrorHandler.builder()
-                .with(this)
-                .responseErrorListener(new ResponseErrorListenerImpl())
-                .build();
-        mRetrofit = ((App)getApplication()).getAppComponent().retrofit();
+        AppComponent appComponent = ((App) getApplication()).getAppComponent();
+        mRetrofit = appComponent.retrofit();
         mRetrofit
                 .create(GankIoServices.class)
                 .getFuLi()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mRxErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(appComponent.rxExerrorHandler()) {
                     @Override
                     public void onNext(BaseResponse<List<FuLiBean>> listBaseResponse) {
 

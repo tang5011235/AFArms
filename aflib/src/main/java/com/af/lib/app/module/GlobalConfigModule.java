@@ -1,6 +1,10 @@
 package com.af.lib.app.module;
 
+import com.af.lib.http.exception.interfaces.ResponseErrorListener;
+
 import java.io.File;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,12 +18,14 @@ public class GlobalConfigModule {
     private File mCacheFile;
     private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
     private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
+    private ResponseErrorListener mResponseErrorListener;
 
     private GlobalConfigModule(Builder builder) {
         mBaseUrl = builder.mBaseUrl;
         mCacheFile = builder.mCacheFile;
         mRetrofitConfiguration = builder.mRetrofitConfiguration;
         mOkHttpConfiguration = builder.mOkHttpConfiguration;
+        mResponseErrorListener = builder.mResponseErrorListener;
     }
 
 
@@ -28,6 +34,7 @@ public class GlobalConfigModule {
         private File mCacheFile;
         private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
         private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
+        private ResponseErrorListener mResponseErrorListener;
 
         public Builder() {
         }
@@ -52,19 +59,31 @@ public class GlobalConfigModule {
             return this;
         }
 
+        public Builder setMResponseErrorListener(ResponseErrorListener mResponseErrorListener) {
+            this.mResponseErrorListener = mResponseErrorListener;
+            return this;
+        }
+
         public GlobalConfigModule build() {
             return new GlobalConfigModule(this);
         }
     }
 
+    @Singleton
     @Provides
-    NetWorkModule.OkHttpConfiguration provideOkHttpConfiguration(){
+    NetWorkModule.OkHttpConfiguration provideOkHttpConfiguration() {
         return mOkHttpConfiguration;
     }
 
+    @Singleton
     @Provides
-    NetWorkModule.RetrofitConfiguration  providerRetrofitConfiguration(){
+    NetWorkModule.RetrofitConfiguration providerRetrofitConfiguration() {
         return mRetrofitConfiguration;
     }
 
+    @Singleton
+    @Provides
+    ResponseErrorListener provideResponseErrorListener(){
+        return mResponseErrorListener == null ? ResponseErrorListener.EMPTY : mResponseErrorListener;
+    }
 }
