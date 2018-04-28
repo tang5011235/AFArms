@@ -25,6 +25,8 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Inject
     FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallback;
 
+    Activity topTaskActivity = null;
+
     @Inject
     public ActivityLifeCycleImp() {
 
@@ -33,7 +35,7 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.tag("AfActivityLifeCycle");
-        Timber.d("onActivityCreated");
+        //Timber.d("onActivityCreated");
         //注入框架内部的fragmentflifeCycle
         ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycleCallback, true);
         //注入外部的fragment的lifeCycles
@@ -44,31 +46,33 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
 
     @Override
     public void onActivityStarted(Activity activity) {
-        Timber.d("onActivityStarted");
+
+        Timber.d("onActivityStarted:" + activity.getLocalClassName());
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Timber.d("onActivityResumed");
+        //Timber.d("onActivityResumed");
+        topTaskActivity = activity;//保存当前活跃的activity
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        Timber.d("onActivityPaused");
+        //Timber.d("onActivityPaused");
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        Timber.d("onActivityStopped");
+        //Timber.d("onActivityStopped");
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        Timber.d("onActivitySaveInstanceState");
+        //Timber.d("onActivitySaveInstanceState");
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        Timber.d("onActivityDestroyed");
+        //Timber.d("onActivityDestroyed");
     }
 }

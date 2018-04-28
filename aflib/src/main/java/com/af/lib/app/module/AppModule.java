@@ -4,7 +4,7 @@ import android.app.Application;
 import android.support.v4.app.FragmentManager;
 
 import com.af.lib.app.lifcycles.imp.ActivityLifeCycleImp;
-import com.af.lib.app.lifcycles.FragmentLifcycle;
+import com.af.lib.app.lifcycles.imp.FragmentLifcycle;
 
 import java.util.ArrayList;
 import java.util.List;
