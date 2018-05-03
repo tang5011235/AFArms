@@ -1,6 +1,11 @@
 package com.af.lib.app.module;
 
+import android.app.Application;
+
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
+import com.af.lib.imageengine.BaseImageLoaderStrategy;
+import com.af.lib.imageengine.glide.GlideStrategy;
+import com.af.lib.utils.FileUtils;
 
 import java.io.File;
 
@@ -16,6 +21,7 @@ import dagger.Provides;
 public class GlobalConfigModule {
     private String mBaseUrl;
     private File mCacheFile;
+    private BaseImageLoaderStrategy mLoaderStrategy;
     private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
     private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
     private ResponseErrorListener mResponseErrorListener;
@@ -23,6 +29,7 @@ public class GlobalConfigModule {
     private GlobalConfigModule(Builder builder) {
         mBaseUrl = builder.mBaseUrl;
         mCacheFile = builder.mCacheFile;
+        mLoaderStrategy = builder.mLoaderStrategy;
         mRetrofitConfiguration = builder.mRetrofitConfiguration;
         mOkHttpConfiguration = builder.mOkHttpConfiguration;
         mResponseErrorListener = builder.mResponseErrorListener;
@@ -32,6 +39,7 @@ public class GlobalConfigModule {
     public static final class Builder {
         private String mBaseUrl;
         private File mCacheFile;
+        private BaseImageLoaderStrategy mLoaderStrategy;
         private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
         private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
         private ResponseErrorListener mResponseErrorListener;
@@ -46,6 +54,11 @@ public class GlobalConfigModule {
 
         public Builder setMCacheFile(File mCacheFile) {
             this.mCacheFile = mCacheFile;
+            return this;
+        }
+
+        public Builder setMLoaderStrategy(BaseImageLoaderStrategy mLoaderStrategy) {
+            this.mLoaderStrategy = mLoaderStrategy;
             return this;
         }
 
@@ -85,5 +98,17 @@ public class GlobalConfigModule {
     @Provides
     ResponseErrorListener provideResponseErrorListener(){
         return mResponseErrorListener == null ? ResponseErrorListener.EMPTY : mResponseErrorListener;
+    }
+
+    @Singleton
+    @Provides
+    File provideCacheFile(Application application){
+        return mCacheFile == null ? FileUtils.getCacheFile(application) : mCacheFile;
+    }
+
+    @Singleton
+    @Provides
+    BaseImageLoaderStrategy provideImageLoaderStragegy(){
+        return mLoaderStrategy != null ? mLoaderStrategy : new GlideStrategy();
     }
 }

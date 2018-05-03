@@ -6,16 +6,15 @@ import android.support.v4.app.FragmentManager;
 
 import com.af.demo.api.Bean.BaseResponse;
 import com.af.lib.BuildConfig;
-import com.af.lib.app.module.GlobalConfigModule;
-import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
 import com.af.lib.app.lifcycles.ConfigModule;
+import com.af.lib.app.module.GlobalConfigModule;
+import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.http.convert.CustomGsonConverterFactory;
 import com.google.gson.Gson;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 
-import java.io.File;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -29,8 +28,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class GlobalConfigeration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
+
         builder.setMBaseUrl("")
-                .setMCacheFile(new File(""))
+                //.setMCacheFile(new File(Environment.getDownloadCacheDirectory(),"glide_cache"))
                 .setMOkHttpConfiguration(new NetWorkModule.OkHttpConfiguration() {
                     @Override
                     public void configOkhttp(Application application, OkHttpClient.Builder builder) {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.af.lib.app.AppDelegate;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,8 +27,6 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Inject
     FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallback;
 
-    Activity topTaskActivity = null;
-
     @Inject
     public ActivityLifeCycleImp() {
 
@@ -35,6 +35,7 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.tag("AfActivityLifeCycle");
+        AppDelegate.glideContextStack.add(activity);
         //Timber.d("onActivityCreated");
         //注入框架内部的fragmentflifeCycle
         ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycleCallback, true);
@@ -53,7 +54,6 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Override
     public void onActivityResumed(Activity activity) {
         //Timber.d("onActivityResumed");
-        topTaskActivity = activity;//保存当前活跃的activity
     }
 
     @Override
@@ -74,5 +74,6 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
     @Override
     public void onActivityDestroyed(Activity activity) {
         //Timber.d("onActivityDestroyed");
+        AppDelegate.glideContextStack.remove(activity);
     }
 }

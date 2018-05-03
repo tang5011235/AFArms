@@ -54,4 +54,5 @@ public class BaseApplication extends Application implements App{
         Preconditions.checkState(mAppDelegate instanceof App, "%s must be implements %s", AppDelegate.class.getName(), App.class.getName());
         return ((App) mAppDelegate).getAppComponent();
     }
+
 }

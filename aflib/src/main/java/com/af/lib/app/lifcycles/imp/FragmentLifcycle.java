@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.af.lib.app.AppDelegate;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -13,6 +15,7 @@ import timber.log.Timber;
 
 @Singleton
 public class FragmentLifcycle extends FragmentManager.FragmentLifecycleCallbacks {
+
     @Inject
     public FragmentLifcycle() {
     }
@@ -35,6 +38,7 @@ public class FragmentLifcycle extends FragmentManager.FragmentLifecycleCallbacks
     @Override
     public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
         super.onFragmentCreated(fm, f, savedInstanceState);
+        AppDelegate.glideContextStack.add(f.getActivity());
     }
 
     @Override
@@ -81,6 +85,7 @@ public class FragmentLifcycle extends FragmentManager.FragmentLifecycleCallbacks
     @Override
     public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
         super.onFragmentDestroyed(fm, f);
+        AppDelegate.glideContextStack.remove(f.getActivity());
     }
 
     @Override

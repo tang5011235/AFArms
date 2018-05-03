@@ -8,6 +8,9 @@ import com.af.lib.app.module.ExceptionModule;
 import com.af.lib.app.module.GlobalConfigModule;
 import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.http.exception.rxjava.RxErrorHandler;
+import com.af.lib.imageengine.BaseImageLoaderStrategy;
+
+import java.io.File;
 
 import javax.inject.Singleton;
 
@@ -25,6 +28,10 @@ public interface AppComponent {
     Retrofit retrofit();
 
     RxErrorHandler rxExerrorHandler();
+
+    File cacheFile();
+
+    BaseImageLoaderStrategy imageLoaderStrategy();
 
     void inject(AppDelegate appDelegate);
 

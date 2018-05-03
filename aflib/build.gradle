@@ -57,6 +57,9 @@ dependencies {
     api(rootProject.ext.dependencies["glide"]) {
         exclude group: 'com.android.support'
     }
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["glide-loader-okhttp3"]
+
 
     //retrofit
     api rootProject.ext.dependencies["retrofit"]
