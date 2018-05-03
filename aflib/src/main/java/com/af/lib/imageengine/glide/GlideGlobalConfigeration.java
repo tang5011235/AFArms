@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.af.lib.app.App;
 import com.af.lib.app.component.AppComponent;
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
-import com.af.lib.imageengine.GlideConfigrationPermission;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;

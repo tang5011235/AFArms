@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.af.lib.app.App;
 import com.af.lib.app.component.AppComponent;
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
-import com.af.lib.imageengine.GlideConfigrationPermission;
 import com.af.lib.imageengine.imp.ImageConfigImp;
 import com.af.lib.utils.FileUtils;
 import com.af.lib.utils.Preconditions;
@@ -116,7 +115,6 @@ public class GlideStrategy implements BaseImageLoaderStrategy<ImageConfigImp>, G
             glideRequest.fallback(config.getFallback());
         }
 
-
         glideRequest
                 .into(config.getImageView());
     }
@@ -192,5 +190,6 @@ public class GlideStrategy implements BaseImageLoaderStrategy<ImageConfigImp>, G
 
         builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
+
     }
 }

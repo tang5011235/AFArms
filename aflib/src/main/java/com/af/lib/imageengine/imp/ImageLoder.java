@@ -12,7 +12,8 @@ import com.af.lib.imageengine.ImageConfig;
  * 邮箱：tang5011235@163.com
  */
 public class ImageLoder {
-    static AppComponent appComponent = ((App) (AppDelegate.glideContextStack.get(AppDelegate.glideContextStack.size()-1)).getApplicationContext()).getAppComponent();
+    //通过mainActivity来 过去AppComponent
+    static AppComponent appComponent = ((App) (AppDelegate.glideContextStack.get(0)).getApplicationContext()).getAppComponent();
     static BaseImageLoaderStrategy sStrategy = appComponent.imageLoaderStrategy();
     public static void loadImage(ImageConfig config) {
         sStrategy.loadImage(AppDelegate.glideContextStack.get(AppDelegate.glideContextStack.size()-1), config);

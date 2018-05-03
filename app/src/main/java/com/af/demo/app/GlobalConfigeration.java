@@ -11,6 +11,7 @@ import com.af.lib.app.lifcycles.ConfigModule;
 import com.af.lib.app.module.GlobalConfigModule;
 import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.http.convert.CustomGsonConverterFactory;
+import com.af.lib.imageengine.glide.GlideStrategy;
 import com.google.gson.Gson;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
@@ -50,6 +51,7 @@ public class GlobalConfigeration implements ConfigModule {
                                 .build());
                     }
                 })
+                .setMLoaderStrategy(new GlideStrategy())
                 .setMRetrofitConfiguration(new NetWorkModule.RetrofitConfiguration() {
                     @Override
                     public void configRetrofit(Application application, Retrofit.Builder builder) {
