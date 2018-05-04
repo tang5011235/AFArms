@@ -11,7 +11,6 @@ import com.af.lib.app.App;
 import com.af.lib.app.component.AppComponent;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
 import com.af.lib.imageengine.imp.ImageConfigImp;
-import com.af.lib.imageengine.imp.ImageLoder;
 
 import java.util.List;
 
@@ -44,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        ImageLoder.loadImage(new ImageConfigImp.Builder()
-                .setImageView(findViewById(R.id.iv))
+        appComponent.getImageLoader().loadImage(
+                findViewById(R.id.iv),new ImageConfigImp.Builder()
                 .setUrl("https://avatars0.githubusercontent.com/u/15711968?s=460&v=4")
-                .build());
-
+                .build()
+        );
     }
 }

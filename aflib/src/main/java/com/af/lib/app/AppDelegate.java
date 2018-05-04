@@ -23,7 +23,6 @@ import javax.inject.Inject;
  * 把<mete-data>下value = ConfigModule的类的所有配置信息读取出来进行初始化
  */
 public class AppDelegate implements AppLifeCycleCallbacks, App {
-    public static ArrayList<Context> glideContextStack =  new ArrayList<Context>();
     //所有的activitylifcycler缓存
     private final List<Application.ActivityLifecycleCallbacks> mActivityLifecycleCallbacks = new ArrayList<>();
     //所有的FragmentLifecycleCallbacks缓存

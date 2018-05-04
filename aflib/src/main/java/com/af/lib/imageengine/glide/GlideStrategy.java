@@ -1,10 +1,15 @@
 package com.af.lib.imageengine.glide;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.af.lib.app.App;
@@ -42,18 +47,33 @@ public class GlideStrategy implements BaseImageLoaderStrategy<ImageConfigImp>, G
     public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;
 
     @Override
-    public void loadImage(Context ctx, ImageConfigImp config) {
-        Preconditions.checkNotNull(ctx, "Context is required");
+    public void loadImage(Object object, ImageConfigImp config) {
+        Preconditions.checkNotNull(object, "Context is required");
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
         if (TextUtils.isEmpty(config.getUrl())) {
             throw new NullPointerException("Url is required");
         }
-        Preconditions.checkNotNull(config.getImageView(), "ImageView is reuired");
 
         GlideRequests requests;
 
-        requests = (GlideRequests) Glide.with(ctx);
+        if (object instanceof FragmentActivity) {
+            requests = (GlideRequests) Glide.with((FragmentActivity) object);
+        } else if (object instanceof Activity) {
+            requests = (GlideRequests) Glide.with((Activity) object);
+        } else if (object instanceof android.app.Fragment) {
+            requests = (GlideRequests) Glide.with((android.app.Fragment) object);
+        } else if (object instanceof Fragment) {
+            requests = (GlideRequests) Glide.with((Fragment) object);
+        } else if (object instanceof View) {
+            requests = (GlideRequests) Glide.with((View) object);
+            config.setImageView((ImageView)object);
+        } else if (object instanceof ContextWrapper) {
+            requests = (GlideRequests) Glide.with((ContextWrapper) object);
+        } else {
+            throw new IllegalArgumentException("glide init fail,object is not available");
+        }
 
+        Preconditions.checkNotNull(config.getImageView(), "ImageView is reuired");
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
         //缓存策略

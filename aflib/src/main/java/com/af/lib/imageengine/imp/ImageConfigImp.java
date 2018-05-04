@@ -45,6 +45,10 @@ public class ImageConfigImp extends ImageConfig {
         mCacheStrategy = builder.mCacheStrategy;
     }
 
+    public void setImageView(ImageView view){
+        imageView = view;
+    }
+
     public int getFallback() {
         return fallback;
     }

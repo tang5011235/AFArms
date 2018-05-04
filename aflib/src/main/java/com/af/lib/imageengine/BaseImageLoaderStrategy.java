@@ -7,10 +7,10 @@ public interface BaseImageLoaderStrategy<T extends ImageConfig> {
     /**
      * 加载图片
      *
-     * @param ctx
+     * @param obj
      * @param config
      */
-    void loadImage(Context ctx, T config);
+    void loadImage(Object obj, T config);
 
     /**
      * 停止加载

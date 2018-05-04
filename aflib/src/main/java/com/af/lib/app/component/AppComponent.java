@@ -9,6 +9,7 @@ import com.af.lib.app.module.GlobalConfigModule;
 import com.af.lib.app.module.NetWorkModule;
 import com.af.lib.http.exception.rxjava.RxErrorHandler;
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
+import com.af.lib.imageengine.imp.ImageLoder;
 
 import java.io.File;
 
@@ -32,6 +33,8 @@ public interface AppComponent {
     File cacheFile();
 
     BaseImageLoaderStrategy imageLoaderStrategy();
+
+    ImageLoder getImageLoader();
 
     void inject(AppDelegate appDelegate);
 

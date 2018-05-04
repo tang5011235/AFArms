@@ -1,25 +1,32 @@
 package com.af.lib.imageengine.imp;
 
-import com.af.lib.app.App;
-import com.af.lib.app.AppDelegate;
-import com.af.lib.app.component.AppComponent;
+import android.content.Context;
+
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
 import com.af.lib.imageengine.ImageConfig;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * 作者：thf on 2018/4/28 0028 10:31
  * <p>
  * 邮箱：tang5011235@163.com
  */
+@Singleton
 public class ImageLoder {
-    //通过mainActivity来 过去AppComponent
-    static AppComponent appComponent = ((App) (AppDelegate.glideContextStack.get(0)).getApplicationContext()).getAppComponent();
-    static BaseImageLoaderStrategy sStrategy = appComponent.imageLoaderStrategy();
-    public static void loadImage(ImageConfig config) {
-        sStrategy.loadImage(AppDelegate.glideContextStack.get(AppDelegate.glideContextStack.size()-1), config);
+    @Inject
+    BaseImageLoaderStrategy mStrategy;
+
+    @Inject
+    public ImageLoder() {
     }
 
-    public static void clear(ImageConfig config) {
-        sStrategy.clear(AppDelegate.glideContextStack.get(AppDelegate.glideContextStack.size()-1), config);
+    public void loadImage(Object object, ImageConfig config) {
+        mStrategy.loadImage(object, config);
+    }
+
+    public void clear(Context context,ImageConfig config) {
+        mStrategy.clear(context, config);
     }
 }
