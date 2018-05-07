@@ -111,7 +111,7 @@ dependencies {
     }
 
     //MultipleStatusView
-    implementation rootProject.ext.dependencies["multiple-status-view"]
+    api rootProject.ext.dependencies["multiple-status-view"]
 
     //butterKnife
     api(rootProject.ext.dependencies['butterknife']) {

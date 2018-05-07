@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import com.af.lib.app.App;
 import com.af.lib.app.component.AppComponent;
+import com.af.lib.utils.IViewProcess;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -19,7 +20,7 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity extends SupportActivity implements LifecycleProvider<ActivityEvent> {
+public abstract class BaseActivity extends SupportActivity implements LifecycleProvider<ActivityEvent>,IViewProcess {
     protected AppComponent mAppComponent;
     private @LayoutRes int mRootViewId;
 
@@ -36,8 +37,6 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
             initView(savedInstanceState);
         }
     }
-
-    protected abstract void initView(Bundle savedInstanceState);
 
     public abstract @LayoutRes int setRootViewId();
 

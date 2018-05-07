@@ -15,6 +15,8 @@ import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
 import com.af.lib.imageengine.imp.ImageConfigImp;
+import com.af.lib.utils.ProgressDialog;
+import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -29,7 +31,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
@@ -42,30 +43,25 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.btn)
     Button mButton;
 
+    private ProgressDialog mProgressDialog;
+
+    @Override
+    public void loadData() {
+
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
     @SuppressLint("CheckResult")
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    public void initView(Bundle savedInstanceState) {
+        mProgressDialog = ProgressDialog.getInstance(true);
         ButterKnife.bind(this);
         mRetrofit = mAppComponent.retrofit();
-        mRetrofit
-                .create(GankIoServices.class)
-                .getFuLi()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(this.bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mAppComponent.rxExerrorHandler()) {
-                    @Override
-                    public void onNext(BaseResponse<List<FuLiBean>> listBaseResponse) {
 
-                    }
-                });
-
-        mAppComponent.getImageLoader().loadImage(
-                mIv, new ImageConfigImp.Builder()
-                        .setUrl("https://avatars0.githubusercontent.com/u/15711968?s=460&v=4")
-                        .setIsCircle(true)
-                        .build()
-        );
 
         RxView.clicks(mIv)
                 .throttleWithTimeout(1, TimeUnit.SECONDS)
@@ -95,9 +91,36 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        sendMessage(mButton);
+                        mAppComponent.getImageLoader().loadImage(
+                                mIv, new ImageConfigImp.Builder()
+                                        .setUrl("https://avatars0.githubusercontent.com/u/15711968?s=460&v=4")
+                                        .setIsCircle(true)
+                                        .build()
+                        );
+
+                        mRetrofit
+                                .create(GankIoServices.class)
+                                .getFuLi()
+                                .compose(RxProcess.CommonProcess(MainActivity.this))
+                                .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
+                                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mAppComponent.rxExerrorHandler()) {
+                                    @Override
+                                    public void onNext(BaseResponse<List<FuLiBean>> listBaseResponse) {
+
+                                    }
+                                });
                     }
                 });
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressDialog.show(getFragmentManager(),"a");
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressDialog.dismiss();
     }
 
     @Override
