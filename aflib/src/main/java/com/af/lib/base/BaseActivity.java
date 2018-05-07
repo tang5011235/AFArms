@@ -17,8 +17,9 @@ import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity extends me.yokeyword.fragmentation.SupportActivity implements LifecycleProvider<ActivityEvent> {
+public abstract class BaseActivity extends SupportActivity implements LifecycleProvider<ActivityEvent> {
     protected AppComponent mAppComponent;
     private @LayoutRes int mRootViewId;
 

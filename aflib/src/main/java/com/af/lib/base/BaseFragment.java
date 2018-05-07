@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.af.lib.R;
+import com.af.lib.app.App;
+import com.af.lib.app.component.AppComponent;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -42,6 +44,7 @@ public class BaseFragment extends SupportFragment implements LifecycleProvider<F
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private AppComponent mAppComponent;
 
     public BaseFragment() {
         // Required empty public constructor
@@ -68,6 +71,7 @@ public class BaseFragment extends SupportFragment implements LifecycleProvider<F
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAppComponent = ((App) (getActivity().getApplication())).getAppComponent();
         lifecycleSubject.onNext(FragmentEvent.CREATE);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

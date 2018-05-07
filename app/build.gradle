@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
@@ -16,6 +15,11 @@ android {
         versionCode rootProject.ext.android['versionCode']
         versionName rootProject.ext.android['versionName']
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
     buildTypes {
         release {
@@ -36,9 +40,14 @@ dependencies {
     implementation project(':aflib')
 
     //LeakCanary
-    debugApi rootProject.ext.dependencies['canary-debug']
-    releaseApi rootProject.ext.dependencies['canary-release']
+    debugImplementation rootProject.ext.dependencies['canary-debug']
+    releaseImplementation rootProject.ext.dependencies['canary-release']
 
     //LrecyclerView
-    api rootProject.ext.dependencies["LRecyclerView"]
+    implementation rootProject.ext.dependencies["LRecyclerView"]
+
+    //butterKnife
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
 }
