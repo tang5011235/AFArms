@@ -118,8 +118,10 @@ ext {
             //MultipleStatusView
             "multiple-status-view"    : "com.classic.common:multiple-status-view:${version["multipleStatusViewVersion"]}",
             //LRecyclerView
-            "LRecyclerView"           : "com.github.jdsjlzx:LRecyclerView:${version["LRecycerViewVersion"]}"
+            "LRecyclerView"           : "com.github.jdsjlzx:LRecyclerView:${version["LRecycerViewVersion"]}",
 
+            //tools AndroidUtilCode
+            "utilcode"                : "com.blankj:utilcode:1.14.3"
     ]
 
 

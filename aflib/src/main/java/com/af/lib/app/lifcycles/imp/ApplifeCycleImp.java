@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.af.lib.BuildConfig;
 import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
+import com.blankj.utilcode.util.Utils;
 
 import timber.log.Timber;
 
@@ -18,6 +19,7 @@ public class ApplifeCycleImp implements AppLifeCycleCallbacks {
     @Override
     public void onCreate(@NonNull Application application) {
         initTimber();
+        Utils.init(application);
     }
 
     @Override

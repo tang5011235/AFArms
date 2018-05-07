@@ -5,7 +5,7 @@ import android.app.Application;
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
 import com.af.lib.imageengine.glide.GlideStrategy;
-import com.af.lib.utils.FileUtils;
+import com.blankj.utilcode.util.FileUtils;
 
 import java.io.File;
 
@@ -96,19 +96,27 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    ResponseErrorListener provideResponseErrorListener(){
+    ResponseErrorListener provideResponseErrorListener() {
         return mResponseErrorListener == null ? ResponseErrorListener.EMPTY : mResponseErrorListener;
     }
 
     @Singleton
     @Provides
-    File provideCacheFile(Application application){
-        return mCacheFile == null ? FileUtils.getCacheFile(application) : mCacheFile;
+    File provideCacheFile(Application application) {
+        if (mCacheFile == null) {
+            File netCache = new File(application.getExternalCacheDir(), "net_cache");
+            if(FileUtils.createOrExistsDir(netCache)){
+                return netCache;
+            }else {
+                throw new  IllegalArgumentException("can't create cacheFile");
+            }
+        }
+        return mCacheFile;
     }
 
     @Singleton
     @Provides
-    BaseImageLoaderStrategy provideImageLoaderStragegy(){
+    BaseImageLoaderStrategy provideImageLoaderStragegy() {
         return mLoaderStrategy != null ? mLoaderStrategy : new GlideStrategy();
     }
 }
