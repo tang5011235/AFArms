@@ -1,7 +1,8 @@
-package com.af.lib.http.exception.imp;
+package com.af.demo.app;
 
 import android.content.Context;
 import android.net.ParseException;
+import android.widget.Toast;
 
 import com.af.lib.http.exception.ApiException;
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
@@ -39,6 +40,8 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
                 Timber.d("当前错误为101");
             }
         }
+
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     private String convertStatusCode(HttpException httpException) {

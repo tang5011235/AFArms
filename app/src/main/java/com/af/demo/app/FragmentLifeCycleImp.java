@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.squareup.leakcanary.RefWatcher;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -79,6 +81,8 @@ public class FragmentLifeCycleImp extends FragmentManager.FragmentLifecycleCallb
     @Override
     public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
         super.onFragmentDestroyed(fm, f);
+        RefWatcher refWatcher = RefWatcher.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     @Override

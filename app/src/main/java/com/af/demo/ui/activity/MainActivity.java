@@ -14,6 +14,7 @@ import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
+import com.af.lib.imageengine.imp.ImageConfigImp;
 import com.af.lib.utils.ProgressDialog;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -93,7 +94,7 @@ public class MainActivity extends BaseActivity {
                         mRetrofit
                                 .create(GankIoServices.class)
                                 .getFuLi()
-                                .delaySubscription(500,TimeUnit.MILLISECONDS)
+                                .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
                                 .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mAppComponent.rxExerrorHandler()) {
@@ -102,6 +103,12 @@ public class MainActivity extends BaseActivity {
                                         //System.out.println(listBaseResponse.getResults().get(0).getDesc());
                                     }
                                 });
+
+                        mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
+                                .setPlaceholder(R.mipmap.ic_launcher)
+                                .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
+                                .setIsCircle(true)
+                                .build());
                     }
                 });
     }
