@@ -1,6 +1,7 @@
 package com.af.lib.app.module;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
 import com.af.lib.imageengine.BaseImageLoaderStrategy;
@@ -119,4 +120,12 @@ public class GlobalConfigModule {
     BaseImageLoaderStrategy provideImageLoaderStragegy() {
         return mLoaderStrategy != null ? mLoaderStrategy : new GlideStrategy();
     }
+
+    @Singleton
+    @Provides
+    String provideBaseUrl() {
+        return TextUtils.isEmpty(mBaseUrl) ? "http://www.baidu.com" : mBaseUrl;
+    }
+
+
 }

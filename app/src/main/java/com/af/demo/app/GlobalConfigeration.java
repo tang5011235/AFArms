@@ -3,7 +3,6 @@ package com.af.demo.app;
 import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import com.af.demo.api.Bean.BaseResponse;
 import com.af.lib.BuildConfig;
@@ -15,7 +14,6 @@ import com.af.lib.http.convert.CustomGsonConverterFactory;
 import com.af.lib.imageengine.glide.GlideStrategy;
 import com.google.gson.Gson;
 import com.ihsanbal.logging.Level;
-import com.ihsanbal.logging.Logger;
 import com.ihsanbal.logging.LoggingInterceptor;
 
 import java.util.List;
@@ -45,13 +43,7 @@ public class GlobalConfigeration implements ConfigModule {
                                 .log(Platform.WARN)
                                 .request("Request")
                                 .response("Response")
-              .logger(new Logger() {
-                  @Override
-                  public void log(int level, String tag, String msg) {
-                      Log.e(tag, msg);
-                  }
-              })
-              .executor(Executors.newSingleThreadExecutor())
+                                .executor(Executors.newSingleThreadExecutor())
                                 .build())
                                 .connectTimeout(15, TimeUnit.SECONDS)
                                 .readTimeout(300, TimeUnit.SECONDS)
@@ -62,8 +54,7 @@ public class GlobalConfigeration implements ConfigModule {
                 .setMRetrofitConfiguration(new NetWorkModule.RetrofitConfiguration() {
                     @Override
                     public void configRetrofit(Application application, Retrofit.Builder builder) {
-                        builder.baseUrl("https://easy-mock.com/mock/5adf28008017f454bb7bfe63/afapi/")
-                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .addConverterFactory(CustomGsonConverterFactory.create(new Gson(), BaseResponse.class));
                     }
                 });

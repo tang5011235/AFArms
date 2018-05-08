@@ -14,7 +14,6 @@ import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
-import com.af.lib.imageengine.imp.ImageConfigImp;
 import com.af.lib.utils.ProgressDialog;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -91,22 +90,16 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        mAppComponent.getImageLoader().loadImage(
-                                mIv, new ImageConfigImp.Builder()
-                                        .setUrl("https://avatars0.githubusercontent.com/u/15711968?s=460&v=4")
-                                        .setIsCircle(true)
-                                        .build()
-                        );
-
                         mRetrofit
                                 .create(GankIoServices.class)
                                 .getFuLi()
+                                .delaySubscription(500,TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
                                 .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mAppComponent.rxExerrorHandler()) {
                                     @Override
                                     public void onNext(BaseResponse<List<FuLiBean>> listBaseResponse) {
-
+                                        //System.out.println(listBaseResponse.getResults().get(0).getDesc());
                                     }
                                 });
                     }
@@ -115,7 +108,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void showProgress() {
-        mProgressDialog.show(getFragmentManager(),"a");
+        mProgressDialog.show(getFragmentManager(), "a");
     }
 
     @Override

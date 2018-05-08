@@ -33,12 +33,14 @@ public class NetWorkModule {
     @Provides
     static Retrofit provideRetrofit(Application application,
                                     OkHttpClient okHttpClient,
-                                    RetrofitConfiguration retrofitConfiguration) {
+                                    RetrofitConfiguration retrofitConfiguration
+    ,String baseUrl) {
         Retrofit.Builder builder = new Retrofit.Builder();
         if (retrofitConfiguration != null) {
             retrofitConfiguration.configRetrofit(application, builder);
         }
         return builder
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .build();
     }

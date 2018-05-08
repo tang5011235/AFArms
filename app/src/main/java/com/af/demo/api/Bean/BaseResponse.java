@@ -7,7 +7,7 @@ import com.af.lib.http.response.interfaces.IResponse;
  */
 
 public class BaseResponse<T> implements IResponse{
-    private int code = 101;
+    private int code = 0;
     private String message;
     private boolean erro;
     private T results;
