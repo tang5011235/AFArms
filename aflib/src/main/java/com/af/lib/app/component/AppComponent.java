@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import io.rx_cache2.internal.RxCache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -27,6 +28,8 @@ public interface AppComponent {
     OkHttpClient okHttp();
 
     Retrofit retrofit();
+
+    RxCache rxCache();
 
     RxErrorHandler rxExerrorHandler();
 

@@ -1,11 +1,16 @@
 package com.af.lib.app.module;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
+
+import java.io.File;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.rx_cache2.internal.RxCache;
+import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -34,7 +39,7 @@ public class NetWorkModule {
     static Retrofit provideRetrofit(Application application,
                                     OkHttpClient okHttpClient,
                                     RetrofitConfiguration retrofitConfiguration
-    ,String baseUrl) {
+            , String baseUrl) {
         Retrofit.Builder builder = new Retrofit.Builder();
         if (retrofitConfiguration != null) {
             retrofitConfiguration.configRetrofit(application, builder);
@@ -43,6 +48,18 @@ public class NetWorkModule {
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    static RxCache provideRxCache(File cacheFile, @Nullable Integer maxSize) {
+        RxCache.Builder builder = new RxCache.Builder();
+        builder.useExpiredDataIfLoaderNotAvailable(true);
+        if (maxSize != null) {
+            builder.setMaxMBPersistenceCache(maxSize);
+        }
+
+        return builder.persistence(cacheFile, new GsonSpeaker());
     }
 
     public interface OkHttpConfiguration {

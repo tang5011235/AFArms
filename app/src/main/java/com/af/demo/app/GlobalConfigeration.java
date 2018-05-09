@@ -33,6 +33,7 @@ public class GlobalConfigeration implements ConfigModule {
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
 
         builder.setMBaseUrl("")
+                .setMaxCacheSizeOfMb(100)
                 //.setMCacheFile(new File(Environment.getDownloadCacheDirectory(),"glide_cache"))
                 .setMOkHttpConfiguration(new NetWorkModule.OkHttpConfiguration() {
                     @Override

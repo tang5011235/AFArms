@@ -1,6 +1,7 @@
 package com.af.lib.app.module;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.af.lib.http.exception.interfaces.ResponseErrorListener;
@@ -22,6 +23,8 @@ import dagger.Provides;
 public class GlobalConfigModule {
     private String mBaseUrl;
     private File mCacheFile;
+    private @Nullable
+    Integer maxCacheSizeOfMb;
     private BaseImageLoaderStrategy mLoaderStrategy;
     private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
     private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
@@ -30,6 +33,7 @@ public class GlobalConfigModule {
     private GlobalConfigModule(Builder builder) {
         mBaseUrl = builder.mBaseUrl;
         mCacheFile = builder.mCacheFile;
+        maxCacheSizeOfMb = builder.maxCacheSizeOfMb;
         mLoaderStrategy = builder.mLoaderStrategy;
         mRetrofitConfiguration = builder.mRetrofitConfiguration;
         mOkHttpConfiguration = builder.mOkHttpConfiguration;
@@ -40,6 +44,7 @@ public class GlobalConfigModule {
     public static final class Builder {
         private String mBaseUrl;
         private File mCacheFile;
+        private Integer maxCacheSizeOfMb;
         private BaseImageLoaderStrategy mLoaderStrategy;
         private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
         private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
@@ -55,6 +60,11 @@ public class GlobalConfigModule {
 
         public Builder setMCacheFile(File mCacheFile) {
             this.mCacheFile = mCacheFile;
+            return this;
+        }
+
+        public Builder setMaxCacheSizeOfMb(Integer maxCacheSizeOfMb) {
+            this.maxCacheSizeOfMb = maxCacheSizeOfMb;
             return this;
         }
 
@@ -106,10 +116,10 @@ public class GlobalConfigModule {
     File provideCacheFile(Application application) {
         if (mCacheFile == null) {
             File netCache = new File(application.getExternalCacheDir(), "net_cache");
-            if(FileUtils.createOrExistsDir(netCache)){
+            if (FileUtils.createOrExistsDir(netCache)) {
                 return netCache;
-            }else {
-                throw new  IllegalArgumentException("can't create cacheFile");
+            } else {
+                throw new IllegalArgumentException("can't create cacheFile");
             }
         }
         return mCacheFile;
@@ -127,5 +137,10 @@ public class GlobalConfigModule {
         return TextUtils.isEmpty(mBaseUrl) ? "http://www.baidu.com" : mBaseUrl;
     }
 
-
+    @Singleton
+    @Provides
+    @Nullable
+    Integer provideMaxCacheSizeOfMb() {
+        return maxCacheSizeOfMb;
+    }
 }

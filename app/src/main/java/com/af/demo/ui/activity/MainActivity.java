@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.af.demo.R;
 import com.af.demo.api.Bean.BaseResponse;
 import com.af.demo.api.Bean.FuLiBean;
+import com.af.demo.api.GankIoRepository;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
@@ -87,13 +88,18 @@ public class MainActivity extends BaseActivity {
 
                     }
                 });
+
+
         RxView.clicks(mButton)
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        mRetrofit
+                        GankIoRepository repository = new GankIoRepository(MainActivity.this);
+                        Observable<BaseResponse<List<FuLiBean>>> fuLi = mRetrofit
                                 .create(GankIoServices.class)
-                                .getFuLi()
+                                .getFuLi();
+                         repository.getFuLi(fuLi, false)
+                       // fuLi
                                 .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
