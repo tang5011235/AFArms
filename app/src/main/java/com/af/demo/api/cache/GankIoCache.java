@@ -19,8 +19,8 @@ import io.rx_cache2.Reply;
  */
 public interface GankIoCache {
 
-    @LifeCache(duration = 1, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<BaseResponse<List<FuLiBean>>>> getFuLi(Observable<BaseResponse<List<FuLiBean>>> observable,
-                                                            DynamicKey dynamicKey,
-                                                            EvictProvider evictProvider);
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    public Observable<Reply<BaseResponse<List<FuLiBean>>>> getFuLi(Observable<BaseResponse<List<FuLiBean>>> observable,
+                                                                   DynamicKey dynamicKey,
+                                                                   EvictProvider evictProvider);
 }

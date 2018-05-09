@@ -15,7 +15,6 @@ import com.af.demo.api.GankIoRepository;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
-import com.af.lib.imageengine.imp.ImageConfigImp;
 import com.af.lib.utils.ProgressDialog;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -110,11 +109,11 @@ public class MainActivity extends BaseActivity {
                                     }
                                 });
 
-                        mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
+                       /* mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
                                 .setPlaceholder(R.mipmap.ic_launcher)
                                 .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
                                 .setIsCircle(true)
-                                .build());
+                                .build());*/
                     }
                 });
     }
