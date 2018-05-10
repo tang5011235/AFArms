@@ -9,18 +9,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.af.demo.R;
-import com.af.demo.api.Bean.BaseResponse;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.GankIoRepository;
-import com.af.demo.api.service.GankIoServices;
 import com.af.lib.base.BaseActivity;
-import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
 import com.af.lib.utils.ProgressDialog;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -93,22 +89,17 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        GankIoRepository repository = new GankIoRepository(MainActivity.this);
-                        Observable<BaseResponse<List<FuLiBean>>> fuLi = mRetrofit
-                                .create(GankIoServices.class)
-                                .getFuLi();
-                         repository.getFuLi(fuLi, false)
-                       // fuLi
+                        mAppComponent.repositoryManager().creatRepository(GankIoRepository.class)
+                                .getFuLi(false)
                                 .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
-                                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<FuLiBean>>>(mAppComponent.rxExerrorHandler()) {
+                                .subscribe(new Consumer<FuLiBean>() {
                                     @Override
-                                    public void onNext(BaseResponse<List<FuLiBean>> listBaseResponse) {
-                                        //System.out.println(listBaseResponse.getResults().get(0).getDesc());
+                                    public void accept(FuLiBean fuLiBean) throws Exception {
+                                        System.out.println("wo de dai" + fuLiBean.getResults().get(0).getDesc());
                                     }
                                 });
-
                        /* mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
                                 .setPlaceholder(R.mipmap.ic_launcher)
                                 .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")

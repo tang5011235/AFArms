@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import io.rx_cache2.internal.RxCache;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
@@ -32,9 +33,14 @@ public class GlobalConfigeration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
 
-        builder.setMBaseUrl("")
+        builder.setMBaseUrl("https://easy-mock.com/mock/5adf28008017f454bb7bfe63/afapi/")
                 .setMaxCacheSizeOfMb(100)
                 //.setMCacheFile(new File(Environment.getDownloadCacheDirectory(),"glide_cache"))
+                .setRxCacheConfiguration(new NetWorkModule.RxCacheConfiguration() {
+                    @Override
+                    public void configRxCache(Application application, RxCache.Builder builder) {
+                    }
+                })
                 .setMOkHttpConfiguration(new NetWorkModule.OkHttpConfiguration() {
                     @Override
                     public void configOkhttp(Application application, OkHttpClient.Builder builder) {

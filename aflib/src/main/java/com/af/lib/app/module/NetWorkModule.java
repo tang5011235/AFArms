@@ -52,13 +52,15 @@ public class NetWorkModule {
 
     @Singleton
     @Provides
-    static RxCache provideRxCache(File cacheFile, @Nullable Integer maxSize) {
+    static RxCache provideRxCache(Application application,File cacheFile, @Nullable Integer maxSize,RxCacheConfiguration configuration) {
         RxCache.Builder builder = new RxCache.Builder();
         builder.useExpiredDataIfLoaderNotAvailable(true);
         if (maxSize != null) {
             builder.setMaxMBPersistenceCache(maxSize);
         }
-
+        if (configuration != null) {
+            configuration.configRxCache(application,builder);
+        }
         return builder.persistence(cacheFile, new GsonSpeaker());
     }
 
@@ -68,5 +70,9 @@ public class NetWorkModule {
 
     public interface RetrofitConfiguration {
         void configRetrofit(Application application, Retrofit.Builder builder);
+    }
+
+    public interface RxCacheConfiguration {
+        void configRxCache(Application application, RxCache.Builder builder);
     }
 }

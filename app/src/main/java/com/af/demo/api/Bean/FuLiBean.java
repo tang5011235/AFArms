@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/5.
  */
 
-public class FuLiBean{
+public class FuLiBean extends  BaseResponse<List<FuLiBean>>{
 
     /**
      * _id : 5a1f5e55421aa90fe725367f

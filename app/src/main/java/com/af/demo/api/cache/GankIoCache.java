@@ -1,9 +1,7 @@
 package com.af.demo.api.cache;
 
-import com.af.demo.api.Bean.BaseResponse;
 import com.af.demo.api.Bean.FuLiBean;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -20,7 +18,7 @@ import io.rx_cache2.Reply;
 public interface GankIoCache {
 
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
-    public Observable<Reply<BaseResponse<List<FuLiBean>>>> getFuLi(Observable<BaseResponse<List<FuLiBean>>> observable,
+    public Observable<Reply<FuLiBean>> getFuLi(Observable<FuLiBean> observable,
                                                                    DynamicKey dynamicKey,
                                                                    EvictProvider evictProvider);
 }

@@ -28,6 +28,7 @@ public class GlobalConfigModule {
     private BaseImageLoaderStrategy mLoaderStrategy;
     private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
     private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
+    private NetWorkModule.RxCacheConfiguration rxCacheConfiguration;
     private ResponseErrorListener mResponseErrorListener;
 
     private GlobalConfigModule(Builder builder) {
@@ -37,6 +38,7 @@ public class GlobalConfigModule {
         mLoaderStrategy = builder.mLoaderStrategy;
         mRetrofitConfiguration = builder.mRetrofitConfiguration;
         mOkHttpConfiguration = builder.mOkHttpConfiguration;
+        rxCacheConfiguration = builder.rxCacheConfiguration;
         mResponseErrorListener = builder.mResponseErrorListener;
     }
 
@@ -48,6 +50,7 @@ public class GlobalConfigModule {
         private BaseImageLoaderStrategy mLoaderStrategy;
         private NetWorkModule.RetrofitConfiguration mRetrofitConfiguration;
         private NetWorkModule.OkHttpConfiguration mOkHttpConfiguration;
+        private NetWorkModule.RxCacheConfiguration rxCacheConfiguration;
         private ResponseErrorListener mResponseErrorListener;
 
         public Builder() {
@@ -80,6 +83,11 @@ public class GlobalConfigModule {
 
         public Builder setMOkHttpConfiguration(NetWorkModule.OkHttpConfiguration mOkHttpConfiguration) {
             this.mOkHttpConfiguration = mOkHttpConfiguration;
+            return this;
+        }
+
+        public Builder setRxCacheConfiguration(NetWorkModule.RxCacheConfiguration rxCacheConfiguration) {
+            this.rxCacheConfiguration = rxCacheConfiguration;
             return this;
         }
 
@@ -142,5 +150,11 @@ public class GlobalConfigModule {
     @Nullable
     Integer provideMaxCacheSizeOfMb() {
         return maxCacheSizeOfMb;
+    }
+
+    @Singleton
+    @Provides
+    NetWorkModule.RxCacheConfiguration privateRxCacheConfiguration(){
+        return rxCacheConfiguration;
     }
 }

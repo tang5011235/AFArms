@@ -3,6 +3,7 @@ package com.af.lib.app.component;
 import android.app.Application;
 
 import com.af.lib.app.AppDelegate;
+import com.af.lib.app.RepositoryManager;
 import com.af.lib.app.module.AppModule;
 import com.af.lib.app.module.ExceptionModule;
 import com.af.lib.app.module.GlobalConfigModule;
@@ -24,6 +25,7 @@ import retrofit2.Retrofit;
 @Singleton
 @Component(modules = {AppModule.class, NetWorkModule.class, ExceptionModule.class, GlobalConfigModule.class})
 public interface AppComponent {
+    Application application();
 
     OkHttpClient okHttp();
 
@@ -38,6 +40,8 @@ public interface AppComponent {
     BaseImageLoaderStrategy imageLoaderStrategy();
 
     ImageLoder getImageLoader();
+
+    RepositoryManager repositoryManager();
 
     void inject(AppDelegate appDelegate);
 
