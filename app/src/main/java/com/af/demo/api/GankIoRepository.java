@@ -1,12 +1,9 @@
 package com.af.demo.api;
 
-import android.app.Application;
-
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.cache.GankIoCache;
 import com.af.demo.api.service.GankIoServices;
-import com.af.lib.app.App;
-import com.af.lib.app.component.AppComponent;
+import com.af.lib.app.RepositoryManager;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -22,20 +19,20 @@ import io.rx_cache2.Reply;
  */
 public class GankIoRepository {
 
-    private AppComponent mAppComponent;
+    private RepositoryManager mManager;
 
-    public GankIoRepository(Application application) {
-        mAppComponent = ((App) application.getApplicationContext()).getAppComponent();
+    public GankIoRepository(RepositoryManager manager) {
+        mManager = manager;
     }
 
     public Observable<FuLiBean> getFuLi(boolean update) {
-        return mAppComponent.repositoryManager()
+        return mManager
                 .creatRetrofitService(GankIoServices.class)
                 .getFuLi()
                 .flatMap(new Function<FuLiBean, ObservableSource<FuLiBean>>() {
                     @Override
                     public ObservableSource<FuLiBean> apply(FuLiBean fuLiBean) throws Exception {
-                        return mAppComponent.repositoryManager().creatRxCacheService(GankIoCache.class)
+                        return mManager.creatRxCacheService(GankIoCache.class)
                                 .getFuLi(Observable.just(fuLiBean), new DynamicKey(0), new EvictDynamicKey(update))
                                 .flatMap(new Function<Reply<FuLiBean>, ObservableSource<FuLiBean>>() {
                                     @Override

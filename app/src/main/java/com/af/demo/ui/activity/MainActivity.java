@@ -27,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity {
                     public void accept(Object o) throws Exception {
                         mAppComponent.repositoryManager().creatRepository(GankIoRepository.class)
                                 .getFuLi(false)
+                                .subscribeOn(Schedulers.io())
                                 .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))

@@ -23,7 +23,6 @@ public class RxProcess {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
                 return upstream
-                        .subscribeOn(Schedulers.io())
                         .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
                             public void accept(Disposable disposable) throws Exception {

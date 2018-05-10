@@ -39,7 +39,7 @@ public class RepositoryManager {
         T t = (T) repository.get(clazz.getCanonicalName());
         if (t == null) {
             try {
-                t = clazz.getConstructor(Application.class).newInstance(mApplication);
+                t = clazz.getConstructor(RepositoryManager.class).newInstance(this);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
