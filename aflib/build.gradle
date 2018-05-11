@@ -133,3 +133,5 @@ dependencies {
 
     api rootProject.ext.dependencies["utilcode"]
 }
+
+apply from: 'bintray.gradle'
