@@ -7,5 +7,5 @@ import retrofit2.http.GET;
 
 public interface GankIoServices {
     @GET("fuli")
-    public Observable<FuLiBean> getFuLi();
+    Observable<FuLiBean> getFuLi();
 }

@@ -6,6 +6,7 @@ import android.util.LruCache;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import io.rx_cache2.internal.RxCache;
@@ -24,18 +25,25 @@ public class RepositoryManager {
     Retrofit mRetrofit;
     @Inject
     Application mApplication;
-    private LruCache<String, Object> repository;
-    private LruCache<String, Object> retrofitService;
-    private LruCache<String, Object> rxCacheService;
+
+    @Inject
+    @Named("repository")
+    LruCache<String, Object> repository;
+
+    @Inject
+    @Named("rxCacheService")
+    LruCache<String, Object> retrofitService;
+
+    @Inject
+    @Named("retrofitService")
+    LruCache<String, Object> rxCacheService;
 
     @Inject
     public RepositoryManager() {
     }
 
     public <T> T creatRepository(Class<T> clazz) {
-        if (repository == null) {
-            repository = new LruCache<>((int) (Runtime.getRuntime().maxMemory() * 0.005f * 1024));
-        }
+        // TODO: 2018/5/11 0011 待优化上锁
         T t = (T) repository.get(clazz.getCanonicalName());
         if (t == null) {
             try {
@@ -56,9 +64,6 @@ public class RepositoryManager {
 
 
     public <T> T creatRetrofitService(Class<T> clazz) {
-        if (retrofitService == null) {
-            retrofitService = new LruCache<>((int) (Runtime.getRuntime().maxMemory() * 0.005f * 1024));
-        }
         T t = (T) retrofitService.get(clazz.getCanonicalName());
         if (t == null) {
             t = mRetrofit.create(clazz);
@@ -69,9 +74,6 @@ public class RepositoryManager {
 
 
     public <T> T creatRxCacheService(Class<T> clazz) {
-        if (rxCacheService == null) {
-            rxCacheService = new LruCache<>((int) (Runtime.getRuntime().maxMemory() * 0.005f * 1024));
-        }
         T t = (T) rxCacheService.get(clazz.getCanonicalName());
         if (t == null) {
             t = mRxCache.using(clazz);

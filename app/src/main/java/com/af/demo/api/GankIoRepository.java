@@ -26,21 +26,29 @@ public class GankIoRepository {
     }
 
     public Observable<FuLiBean> getFuLi(boolean update) {
-        return mManager
-                .creatRetrofitService(GankIoServices.class)
-                .getFuLi()
-                .flatMap(new Function<FuLiBean, ObservableSource<FuLiBean>>() {
+
+        /*return Observable.just(mManager.creatRetrofitService(GankIoServices.class).getFuLi())
+                .flatMap(new Function<Observable<FuLiBean>, ObservableSource<FuLiBean>>() {
                     @Override
-                    public ObservableSource<FuLiBean> apply(FuLiBean fuLiBean) throws Exception {
+                    public ObservableSource<FuLiBean> apply(Observable<FuLiBean> observable) throws Exception {
                         return mManager.creatRxCacheService(GankIoCache.class)
-                                .getFuLi(Observable.just(fuLiBean), new DynamicKey(0), new EvictDynamicKey(update))
-                                .flatMap(new Function<Reply<FuLiBean>, ObservableSource<FuLiBean>>() {
+                                .getFuLi(observable, new DynamicKey(0), new EvictDynamicKey(update))
+                                .map(new Function<Reply<FuLiBean>, FuLiBean>() {
                                     @Override
-                                    public ObservableSource<FuLiBean> apply(Reply<FuLiBean> fuLiBeanReply) throws Exception {
-                                        return Observable.just(fuLiBeanReply.getData());
+                                    public FuLiBean apply(Reply<FuLiBean> fuLiBeanReply) throws Exception {
+                                        return fuLiBeanReply.getData();
                                     }
                                 });
                     }
+                });*/
+        return mManager.creatRxCacheService(GankIoCache.class)
+                .getFuLi(mManager.creatRetrofitService(GankIoServices.class).getFuLi(), new DynamicKey(0), new EvictDynamicKey(update))
+                .flatMap(new Function<Reply<FuLiBean>, ObservableSource<FuLiBean>>() {
+                    @Override
+                    public ObservableSource<FuLiBean> apply(Reply<FuLiBean> fuLiBeanReply) throws Exception {
+                        return Observable.just(fuLiBeanReply.getData());
+                    }
                 });
+
     }
 }

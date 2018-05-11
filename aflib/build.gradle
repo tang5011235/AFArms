@@ -24,6 +24,11 @@ android {
         }
     }
 
+    //binary
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
