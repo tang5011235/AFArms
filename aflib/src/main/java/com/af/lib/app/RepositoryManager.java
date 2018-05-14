@@ -16,6 +16,7 @@ import retrofit2.Retrofit;
  * 作者：thf on 2018/5/10 0010 15:18
  * <p>
  * 邮箱：tang5011235@163.com
+ * a
  */
 @Singleton
 public class RepositoryManager {
