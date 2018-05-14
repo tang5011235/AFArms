@@ -12,7 +12,7 @@ android {
         minSdkVersion rootProject.ext.android['minSdkVersion']
         targetSdkVersion rootProject.ext.android['targetSdkVersion']
         versionCode rootProject.ext.android['versionCode']
-        versionName rootProject.ext.android['versionName']
+        versionName "1.0.0"
     }
 
 
@@ -22,11 +22,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    //binary
-    lintOptions {
-        abortOnError false
     }
 
 }
@@ -134,4 +129,4 @@ dependencies {
     api rootProject.ext.dependencies["utilcode"]
 }
 
-apply from: 'bintray.gradle'
+apply from :"bintrayUpload.gradle"
