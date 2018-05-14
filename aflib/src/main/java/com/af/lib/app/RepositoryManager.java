@@ -43,6 +43,8 @@ public class RepositoryManager {
     }
 
     public <T> T creatRepository(Class<T> clazz) {
+
+        //
         T t = (T) repository.get(clazz.getCanonicalName());
         if (t == null) {
             try {
