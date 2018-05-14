@@ -43,7 +43,6 @@ public class RepositoryManager {
     }
 
     public <T> T creatRepository(Class<T> clazz) {
-        // TODO: 2018/5/11 0011 待优化上锁
         T t = (T) repository.get(clazz.getCanonicalName());
         if (t == null) {
             try {
