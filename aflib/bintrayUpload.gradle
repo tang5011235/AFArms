@@ -106,7 +106,6 @@ javadoc {
 bintray {
     user = bintrayUser
     key = bintrayApikey
-    configurations = ['archives']
     pkg {
         repo = "AFArms"
         name = projectName
@@ -114,5 +113,15 @@ bintray {
         vcsUrl = projectGitUrl
         licenses = ["Apache-2.0"]
         publish = true
+
+       /* version {
+            name = rootProject.ext.android["versionName"]
+            desc = 'android fram mvc'
+            released = new Date()
+            vcsTag = 'v' + projectVersionName
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }*/
     }
+
+    configurations = ['archives']
 }
