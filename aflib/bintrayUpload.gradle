@@ -114,7 +114,7 @@ bintray {
         licenses = ["Apache-2.0"]
         publish = true
 
-        //relesed
+        //relesed  s
        /* version {
             name = rootProject.ext.android["versionName"]
             desc = 'android fram mvc'
