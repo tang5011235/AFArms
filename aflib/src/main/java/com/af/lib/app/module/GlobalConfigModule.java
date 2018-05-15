@@ -17,7 +17,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * 存储用户的配置信息
+ * 存储用户的配置信息,
  */
 @Module
 public class GlobalConfigModule {
