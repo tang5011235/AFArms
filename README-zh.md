@@ -18,7 +18,7 @@
 
 
 ## 第三方库
-*rxjava
+* rxjava
 *rxbinding
 *fragmentation
 *timber

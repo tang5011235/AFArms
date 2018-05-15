@@ -18,19 +18,19 @@
 
 
 ## 第三方库
-*rxjava
-*rxbinding
-*fragmentation
-*timber
-*rxlife
-*rxandroid
-*retrofit
-*dagger2
-*glide
-*rxcache
-*MultipleStatusView
-*butterKnife
-*loggingInterceptor
+* rxjava
+* rxbinding
+* fragmentation
+* timber
+* rxlife
+* rxandroid
+* retrofit
+* dagger2
+* glide
+* rxcache
+* MultipleStatusView
+* butterKnife
+* loggingInterceptor
 
 
 ## Notice
