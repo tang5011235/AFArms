@@ -1,7 +1,7 @@
 <h1 align="center">AFArms</h1>
 
 <p align="center">
-   <a href="https://bintray.com/jessyancoding/maven/MVPArt/2.4.1/link">
+   <a href="https://bintray.com/alanfeng/AFArms/aflib">
     <img src="https://img.shields.io/badge/Jcenter-v1.0.0-brightgreen.svg?style=flat-square" alt="Latest Beta Version" />
   </a>
   <a href="https://developer.android.com/about/versions/android-4.2.html">
