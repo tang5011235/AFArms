@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.af.lib.app.AFManager;
+import com.squareup.leakcanary.RefWatcher;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -80,6 +83,7 @@ public class FragmentLifeCycleImp extends FragmentManager.FragmentLifecycleCallb
     public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
         super.onFragmentDestroyed(fm, f);
         // TODO: 2018/5/9 0009 leakcanry监听设置
+        ((RefWatcher)AFManager.getService(RefWatcher.class)).watch(f);
     }
 
     @Override

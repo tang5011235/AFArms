@@ -5,7 +5,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.af.demo.BuildConfig;
+import com.af.lib.app.AFManager;
 import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
@@ -17,6 +20,26 @@ public class ApplifeCycleImp implements AppLifeCycleCallbacks {
 
     @Override
     public void onCreate(@NonNull Application application) {
+        openStackEyes();
+        initLeackCanary(application);
+    }
+
+    @Override
+    public void onTerminate(@NonNull Application application) {
+
+    }
+
+    private void initLeackCanary(Application application) {
+        if (LeakCanary.isInAnalyzerProcess(application)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        RefWatcher refWatcher = LeakCanary.install(application);
+        AFManager.putService(RefWatcher.class, refWatcher);
+    }
+
+    private void openStackEyes() {
         Fragmentation.builder()
                 // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
                 .stackViewMode(Fragmentation.BUBBLE)
@@ -31,10 +54,5 @@ public class ApplifeCycleImp implements AppLifeCycleCallbacks {
                     }
                 })
                 .install();
-    }
-
-    @Override
-    public void onTerminate(@NonNull Application application) {
-
     }
 }

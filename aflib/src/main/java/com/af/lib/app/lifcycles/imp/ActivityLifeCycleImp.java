@@ -35,11 +35,15 @@ public class ActivityLifeCycleImp implements Application.ActivityLifecycleCallba
         Timber.tag("AfActivityLifeCycle");
         //Timber.d("onActivityCreated");
         //注入框架内部的fragmentflifeCycle
-        ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycleCallback, true);
-        //注入外部的fragment的lifeCycles
-        for (FragmentManager.FragmentLifecycleCallbacks lifecycleCallback : mFragmentLifecycleCallbacks) {
-            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(lifecycleCallback, true);
+
+        if(activity instanceof FragmentActivity){
+            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycleCallback, true);
+            //注入外部的fragment的lifeCycles
+            for (FragmentManager.FragmentLifecycleCallbacks lifecycleCallback : mFragmentLifecycleCallbacks) {
+                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(lifecycleCallback, true);
+            }
         }
+
     }
 
     @Override
