@@ -34,7 +34,7 @@
 
 
 ## Notice
-*使用时请参考demo
+* 使用时请参考demo
 
 ## Download
 ``` gradle
