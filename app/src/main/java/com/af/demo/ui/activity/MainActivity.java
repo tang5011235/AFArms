@@ -2,9 +2,7 @@ package com.af.demo.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,12 +25,10 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
@@ -111,11 +107,12 @@ public class MainActivity extends BaseActivity {
                                 });
 
 
-                        AFManager.getService(ImageLoder.class).loadImage(mIv, new ImageConfigImp.Builder()
-                                .setPlaceholder(R.mipmap.ic_launcher)
-                                .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
-                                .setIsCircle(true)
-                                .build());
+                        AFManager.getService(ImageLoder.class)
+                                .loadImage(mIv, new ImageConfigImp.Builder()
+                                        .setPlaceholder(R.mipmap.ic_launcher)
+                                        .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
+                                        .setIsCircle(true)
+                                        .build());
                     }
                 });
     }
@@ -133,48 +130,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public int setRootViewId() {
         return R.layout.activity_main;
-    }
-
-
-    void sendMessage(Button button) {
-        final long count = 3;
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(count + 1)
-                .map(new Function<Long, Long>() {
-                    @Override
-                    public Long apply(@NonNull Long aLong) throws Exception {
-                        return count - aLong;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
-                        button.setEnabled(false);
-                        button.setTextColor(Color.BLACK);
-                    }
-                })
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        button.setText("剩余" + aLong + "秒");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        button.setEnabled(true);
-                        button.setTextColor(Color.RED);
-                        button.setText("发送验证码");
-                    }
-                });
     }
 
 }

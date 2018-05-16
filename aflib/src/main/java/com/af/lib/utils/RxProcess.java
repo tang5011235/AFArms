@@ -8,7 +8,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -51,7 +50,6 @@ public class RxProcess {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
                 return upstream
-                        .subscribeOn(Schedulers.io())
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread());
             }
