@@ -11,18 +11,28 @@ import com.af.lib.app.lifcycles.AppLifeCycleCallbacks;
 import com.af.lib.app.lifcycles.ConfigModule;
 import com.af.lib.app.lifcycles.imp.ApplifeCycleImp;
 import com.af.lib.app.module.GlobalConfigModule;
+import com.af.lib.http.exception.rxjava.RxErrorHandler;
+import com.af.lib.imageengine.imp.ImageLoder;
 import com.af.lib.utils.ManifestParser;
 import com.af.lib.utils.Preconditions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.rx_cache2.internal.RxCache;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+
 /**
  * 把<mete-data>下value = ConfigModule的类的所有配置信息读取出来进行初始化
  */
-public class AppDelegate implements AppLifeCycleCallbacks, App {
+public final class AppDelegate implements AppLifeCycleCallbacks, App {
+    static final HashMap<String, Object> AF_SERVICE = new HashMap<>();
+
+    final static HashMap<String, Object> CUSTOM_SERVICE = new HashMap<>();
     //所有的activitylifcycler缓存
     private final List<Application.ActivityLifecycleCallbacks> mActivityLifecycleCallbacks = new ArrayList<>();
     //所有的FragmentLifecycleCallbacks缓存
@@ -66,7 +76,7 @@ public class AppDelegate implements AppLifeCycleCallbacks, App {
                 .globalConfigModule(globalConfigModule)
                 .build();
         mAppComponent.inject(this);
-
+        addServices(application);
         //注册框架内部的activityLifeCycle
         application.registerActivityLifecycleCallbacks(mActivityLifecycleCallback);
         for (Application.ActivityLifecycleCallbacks lifecycleCallback : mActivityLifecycleCallbacks) {
@@ -76,6 +86,16 @@ public class AppDelegate implements AppLifeCycleCallbacks, App {
         for (AppLifeCycleCallbacks lifeCycleCallback : mAppLifeCycleCallbacks) {
             lifeCycleCallback.onCreate(application);
         }
+    }
+
+    private void addServices(@NonNull Application application) {
+        AFManager.putService(RxCache.class, mAppComponent.rxCache());
+        AFManager.putService(Retrofit.class, mAppComponent.retrofit());
+        AFManager.putService(OkHttpClient.class, mAppComponent.okHttp());
+        AFManager.putService(ImageLoder.class, mAppComponent.getImageLoader());
+        AFManager.putService(Application.class, application);
+        AFManager.putService(RepositoryManager.class, mAppComponent.repositoryManager());
+        AFManager.putService(RxErrorHandler.class, mAppComponent.rxExerrorHandler());
     }
 
     @Override

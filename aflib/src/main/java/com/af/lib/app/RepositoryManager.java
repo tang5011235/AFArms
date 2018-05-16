@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
  * a
  */
 @Singleton
-public class RepositoryManager {
+public final class RepositoryManager {
     @Inject
     RxCache mRxCache;
     @Inject

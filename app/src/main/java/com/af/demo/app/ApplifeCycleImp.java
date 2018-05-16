@@ -36,7 +36,7 @@ public class ApplifeCycleImp implements AppLifeCycleCallbacks {
             return;
         }
         RefWatcher refWatcher = LeakCanary.install(application);
-        AFManager.putService(RefWatcher.class, refWatcher);
+        AFManager.putCustomService(RefWatcher.class, refWatcher);
     }
 
     private void openStackEyes() {

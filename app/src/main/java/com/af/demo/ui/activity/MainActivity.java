@@ -1,6 +1,7 @@
 package com.af.demo.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +12,12 @@ import android.widget.Toast;
 import com.af.demo.R;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.GankIoRepository;
+import com.af.lib.app.AFManager;
+import com.af.lib.app.App;
 import com.af.lib.base.BaseActivity;
+import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
+import com.af.lib.imageengine.imp.ImageConfigImp;
+import com.af.lib.imageengine.imp.ImageLoder;
 import com.af.lib.utils.ProgressDialog;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -57,6 +63,7 @@ public class MainActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         mProgressDialog = ProgressDialog.getInstance(true);
         ButterKnife.bind(this);
+        mAppComponent = ((App) ((Application) AFManager.getService(Application.class))).getAppComponent();
         mRetrofit = mAppComponent.retrofit();
 
 
@@ -89,24 +96,26 @@ public class MainActivity extends BaseActivity {
         RxView.clicks(mButton)
                 .subscribe(new Consumer<Object>() {
                     @Override
-                    public void accept(Object o) throws Exception {
+                    public void accept(Object o) {
                         mAppComponent.repositoryManager().creatRepository(GankIoRepository.class)
                                 .getFuLi(false)
                                 .subscribeOn(Schedulers.io())
                                 .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
-                                .subscribe(new Consumer<FuLiBean>() {
+                                .subscribe(new ErrorHandleSubscriber<FuLiBean>(mAppComponent.rxExerrorHandler()) {
                                     @Override
-                                    public void accept(FuLiBean fuLiBean) throws Exception {
-                                        System.out.println("wo de dai" + fuLiBean.getResults().get(0).getDesc());
+                                    public void onNext(FuLiBean fuLiBean) {
+
                                     }
                                 });
-                       /* mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
+
+
+                        AFManager.getService(ImageLoder.class).loadImage(mIv, new ImageConfigImp.Builder()
                                 .setPlaceholder(R.mipmap.ic_launcher)
                                 .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
                                 .setIsCircle(true)
-                                .build());*/
+                                .build());
                     }
                 });
     }
