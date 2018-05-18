@@ -23,7 +23,8 @@ import io.reactivex.schedulers.Schedulers;
 public class RxCountDown {
 
 
-    void sendMessage(final long time, BaseActivity baseActivity) {
+   public void sendMessage(final long time, BaseActivity baseActivity,CountDownListener countDownListener) {
+       mCountDownListener = countDownListener;
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(time + 1)
                 .map(new Function<Long, Long>() {
@@ -74,6 +75,6 @@ public class RxCountDown {
     }
 
     public void setCountDownListener(CountDownListener countDownListener) {
-        mCountDownListener = countDownListener;
+
     }
 }

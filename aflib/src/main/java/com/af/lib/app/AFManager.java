@@ -1,5 +1,7 @@
 package com.af.lib.app;
 
+import android.support.annotation.NonNull;
+
 /**
  * 作者：thf on 2018/5/15 0015 16:48
  * <p>
@@ -7,6 +9,9 @@ package com.af.lib.app;
  */
 public final class AFManager {
 
+    /**
+     * 系统服务
+     */
     public static Object getService(String serviceName) {
         return AppDelegate.AF_SERVICE.get(serviceName);
     }
@@ -38,7 +43,7 @@ public final class AFManager {
         return AppDelegate.CUSTOM_SERVICE.get(serviceName);
     }
 
-    public static <T> T getCustomService(Class<T> clazz) {
+    public static <T> T getCustomService(@NonNull Class<T> clazz) {
         return (T) AppDelegate.CUSTOM_SERVICE.get(clazz.getSimpleName());
     }
 
