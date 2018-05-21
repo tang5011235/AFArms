@@ -13,7 +13,6 @@ import com.af.lib.imageengine.BaseImageLoaderStrategy;
 import com.af.lib.imageengine.imp.ImageLoder;
 
 import java.io.File;
-import java.util.HashMap;
 
 import javax.inject.Singleton;
 
@@ -26,7 +25,6 @@ import retrofit2.Retrofit;
 @Singleton
 @Component(modules = {AppModule.class, NetWorkModule.class, ExceptionModule.class, GlobalConfigModule.class})
 public interface AppComponent {
-    HashMap<String,Object> afService = new HashMap<>();
 
     Application application();
 

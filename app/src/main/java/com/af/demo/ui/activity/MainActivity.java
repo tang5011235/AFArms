@@ -1,9 +1,9 @@
 package com.af.demo.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -11,8 +11,14 @@ import android.widget.Toast;
 import com.af.demo.R;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.GankIoRepository;
+import com.af.lib.app.AFManager;
+import com.af.lib.app.RepositoryManager;
 import com.af.lib.base.BaseActivity;
+import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
+import com.af.lib.imageengine.imp.ImageConfigImp;
+import com.af.lib.imageengine.imp.ImageLoder;
 import com.af.lib.utils.ProgressDialog;
+import com.af.lib.utils.RxCountDown;
 import com.af.lib.utils.RxProcess;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -21,12 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity {
     Button mButton;
 
     private ProgressDialog mProgressDialog;
+    private RxCountDown mRxCountDown;
 
     @Override
     public void loadData() {
@@ -57,31 +60,15 @@ public class MainActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         mProgressDialog = ProgressDialog.getInstance(true);
         ButterKnife.bind(this);
-        mRetrofit = mAppComponent.retrofit();
-
+        mRxCountDown = new RxCountDown();
 
         RxView.clicks(mIv)
                 .throttleWithTimeout(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Object>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
+                    public void accept(Object o) throws Exception {
                         Toast.makeText(MainActivity.this, "sadf", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
 
@@ -89,24 +76,62 @@ public class MainActivity extends BaseActivity {
         RxView.clicks(mButton)
                 .subscribe(new Consumer<Object>() {
                     @Override
-                    public void accept(Object o) throws Exception {
-                        mAppComponent.repositoryManager().creatRepository(GankIoRepository.class)
+                    public void accept(Object o) {
+
+                        /**
+                         * 网络请求
+                         */
+                        AFManager.getService(RepositoryManager.class)
+                                .creatRepository(GankIoRepository.class)
                                 .getFuLi(false)
                                 .subscribeOn(Schedulers.io())
                                 .delaySubscription(500, TimeUnit.MILLISECONDS)
                                 .compose(RxProcess.CommonProcess(MainActivity.this))
                                 .compose(MainActivity.this.bindUntilEvent(ActivityEvent.DESTROY))
-                                .subscribe(new Consumer<FuLiBean>() {
+                                .subscribe(new ErrorHandleSubscriber<FuLiBean>(mAppComponent.rxExerrorHandler()) {
                                     @Override
-                                    public void accept(FuLiBean fuLiBean) throws Exception {
-                                        System.out.println("wo de dai" + fuLiBean.getResults().get(0).getDesc());
+                                    public void onNext(FuLiBean fuLiBean) {
+
                                     }
                                 });
-                       /* mAppComponent.getImageLoader().loadImage(mIv, new ImageConfigImp.Builder()
-                                .setPlaceholder(R.mipmap.ic_launcher)
-                                .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
-                                .setIsCircle(true)
-                                .build());*/
+
+
+                        /**
+                         * 图片请求
+                         */
+                        AFManager.getService(ImageLoder.class)
+                                .loadImage(mIv, new ImageConfigImp.Builder()
+                                        .setPlaceholder(R.mipmap.ic_launcher)
+                                        .setUrl("https://github.com/YoKeyword/Fragmentation/raw/master/gif/logo.png")
+                                        .setIsCircle(true)
+                                        .build());
+
+
+                        /**
+                         * 倒计时
+                         */
+                        mRxCountDown.sendMessage(10, MainActivity.this, new RxCountDown.CountDownListener() {
+                            @Override
+                            public void onSend() {
+                                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                                mButton.setText("发送验证码");
+                                mButton.setTextColor(Color.BLUE);
+                            }
+
+                            @Override
+                            public void sending(Long aLong) {
+                                mButton.setEnabled(false);
+                                mButton.setText(aLong + "");
+                                mButton.setTextColor(Color.RED);
+                            }
+
+                            @Override
+                            public void sended() {
+                                mButton.setEnabled(true);
+                                mButton.setText("发送验证码");
+                                mButton.setTextColor(Color.BLUE);
+                            }
+                        });
                     }
                 });
     }
@@ -124,48 +149,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public int setRootViewId() {
         return R.layout.activity_main;
-    }
-
-
-    void sendMessage(Button button) {
-        final long count = 3;
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(count + 1)
-                .map(new Function<Long, Long>() {
-                    @Override
-                    public Long apply(@NonNull Long aLong) throws Exception {
-                        return count - aLong;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
-                        button.setEnabled(false);
-                        button.setTextColor(Color.BLACK);
-                    }
-                })
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        button.setText("剩余" + aLong + "秒");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        button.setEnabled(true);
-                        button.setTextColor(Color.RED);
-                        button.setText("发送验证码");
-                    }
-                });
     }
 
 }
