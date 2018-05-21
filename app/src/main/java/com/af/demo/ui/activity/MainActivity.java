@@ -1,6 +1,8 @@
 package com.af.demo.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -105,7 +107,10 @@ public class MainActivity extends BaseActivity {
                                         .build());
 
 
-                        /*mRxCountDown.sendMessage(10, MainActivity.this, new RxCountDown.CountDownListener() {
+                        /**
+                         * 倒计时
+                         */
+                        mRxCountDown.sendMessage(10, MainActivity.this, new RxCountDown.CountDownListener() {
                             @Override
                             public void onSend() {
                                 startActivity(new Intent(MainActivity.this, MainActivity.class));
@@ -126,7 +131,7 @@ public class MainActivity extends BaseActivity {
                                 mButton.setText("发送验证码");
                                 mButton.setTextColor(Color.BLUE);
                             }
-                        });*/
+                        });
                     }
                 });
     }
