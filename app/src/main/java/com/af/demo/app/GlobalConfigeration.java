@@ -33,7 +33,7 @@ public class GlobalConfigeration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
 
-        builder.setMBaseUrl("https://easy-mock.com/mock/5adf28008017f454bb7bfe63/afapi/")
+        builder.setMBaseUrl("http://gank.io/api/")
                 .setMaxCacheSizeOfMb(100)
                 //.setMCacheFile(new File(Environment.getDownloadCacheDirectory(),"glide_cache"))
                 .setRxCacheConfiguration(new NetWorkModule.RxCacheConfiguration() {

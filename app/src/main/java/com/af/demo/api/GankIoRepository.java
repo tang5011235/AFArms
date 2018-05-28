@@ -1,6 +1,7 @@
 package com.af.demo.api;
 
 import com.af.demo.api.Bean.FuLiBean;
+import com.af.demo.api.Bean.GankIoDayDataBean;
 import com.af.demo.api.cache.GankIoCache;
 import com.af.demo.api.service.GankIoServices;
 import com.af.lib.app.RepositoryManager;
@@ -47,6 +48,18 @@ public class GankIoRepository {
                     @Override
                     public ObservableSource<FuLiBean> apply(Reply<FuLiBean> fuLiBeanReply) throws Exception {
                         return Observable.just(fuLiBeanReply.getData());
+                    }
+                });
+
+    }
+
+    public Observable<GankIoDayDataBean> getDayData(String date,boolean update) {
+        return mManager.creatRxCacheService(GankIoCache.class)
+                .getDayData(mManager.creatRetrofitService(GankIoServices.class).getDayData(date), new DynamicKey(0), new EvictDynamicKey(update))
+                .flatMap(new Function<Reply<GankIoDayDataBean>, ObservableSource<GankIoDayDataBean>>() {
+                    @Override
+                    public ObservableSource<GankIoDayDataBean> apply(Reply<GankIoDayDataBean> GankIoDayDataBeanReply) throws Exception {
+                        return Observable.just(GankIoDayDataBeanReply.getData());
                     }
                 });
 

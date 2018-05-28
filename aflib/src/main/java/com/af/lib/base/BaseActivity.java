@@ -35,6 +35,7 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         } else {
             setContentView(mRootViewId);
             initView(savedInstanceState);
+            loadData();
         }
     }
 

@@ -59,7 +59,6 @@ public class MainActivity extends BaseActivity {
         mProgressDialog = ProgressDialog.getInstance(true);
         ButterKnife.bind(this);
         mRxCountDown = new RxCountDown();
-
         RxView.clicks(mIv)
                 .throttleWithTimeout(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

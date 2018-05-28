@@ -1,6 +1,7 @@
 package com.af.demo.api.cache;
 
 import com.af.demo.api.Bean.FuLiBean;
+import com.af.demo.api.Bean.GankIoDayDataBean;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,8 +18,20 @@ import io.rx_cache2.Reply;
  */
 public interface GankIoCache {
 
-    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
-    public Observable<Reply<FuLiBean>> getFuLi(Observable<FuLiBean> observable,
-                                                                   DynamicKey dynamicKey,
-                                                                   EvictProvider evictProvider);
+	@LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+	public Observable<Reply<FuLiBean>> getFuLi(Observable<FuLiBean> observable,
+	                                           DynamicKey dynamicKey,
+	                                           EvictProvider evictProvider);
+
+	/**
+	 * 获取指定日期数据
+	 * @param observable
+	 * @param dynamicKey
+	 * @param evictProvider
+	 * @return
+	 */
+	@LifeCache(duration = 15, timeUnit = TimeUnit.DAYS)
+	Observable<Reply<GankIoDayDataBean>> getDayData(Observable<GankIoDayDataBean> observable,
+	                                                DynamicKey dynamicKey,
+	                                                EvictProvider evictProvider);
 }
