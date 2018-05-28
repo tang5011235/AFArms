@@ -15,95 +15,575 @@ import java.util.List;
  */
 public class GankIoDayDataBean extends BaseResponse<List<GankIoDayDataBean>>{
 
-	/**
-	 * _id : 5732b15067765974f885c05a
-	 * content : <h3><img alt="" src="http://ww2.sinaimg.cn/large/610dc034jw1f3rbikc83dj20dw0kuadt.jpg" /></h3>
+	private List<AndroidBean> Android;
+	private List<IOSBean> iOS;
+	private List<休息视频Bean> 休息视频;
+	private List<拓展资源Bean> 拓展资源;
+	private List<瞎推荐Bean> 瞎推荐;
+	private List<福利Bean> 福利;
 
-	 <h3>Android</h3>
-
-	 <ul>
-	 <li><a href="http://www.jianshu.com/p/d9143a92ad94" target="_blank">Fragment完全解析三步曲</a>&nbsp;(AndWang)</li>
-	 <li><a href="http://blog.csdn.net/dd864140130/article/details/51313342" target="_blank">送给小白的设计说明书</a>&nbsp;(Dong dong Liu)</li>
-	 <li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/2016/0508/4222.html" target="_blank">Material 风格的干货客户端</a>&nbsp;(None)</li>
-	 <li><a href="https://github.com/jiang111/ScalableTabIndicator" target="_blank">可定制的Indicator,结合ViewPager使用</a>&nbsp;(NewTab)</li>
-	 <li><a href="https://github.com/north2014/T-MVP" target="_blank">T-MVP：泛型深度解耦下的MVP大瘦身</a>&nbsp;(Bai xiaokang)</li>
-	 <li><a href="https://github.com/GrenderG/Prefs" target="_blank">Simple Android SharedPreferences wrapper</a>&nbsp;(蒋朋)</li>
-	 <li><a href="https://github.com/shiraji/permissions-dispatcher-plugin" target="_blank">IntelliJ plugin for supporting PermissionsDispatcher</a>&nbsp;(蒋朋)</li>
-	 </ul>
-
-	 <h3>iOS</h3>
-
-	 <ul>
-	 <li><a href="http://mp.weixin.qq.com/s?__biz=MzIwMTYzMzcwOQ==&amp;mid=2650948304&amp;idx=1&amp;sn=f76e7b765a7fcabcb71d37052b46e489&amp;scene=0#wechat_redirect" target="_blank">别人的&nbsp;App 不好用？自己改了便是。Moves 篇（上）</a>&nbsp;(tripleCC)</li>
-	 <li><a href="https://github.com/netease-im/NIM_iOS_UIKit" target="_blank">网易云信iOS UI组件源码仓库</a>&nbsp;(__weak_Point)</li>
-	 <li><a href="https://github.com/openshopio/openshop.io-ios" target="_blank">OpenShop 开源</a>&nbsp;(代码家)</li>
-	 <li><a href="https://github.com/garnele007/SwiftOCR" target="_blank">Swift 实现的 OCR 识别库</a>&nbsp;(代码家)</li>
-	 <li><a href="http://yulingtianxia.com/blog/2016/05/06/Let-your-WeChat-for-Mac-never-revoke-messages/" target="_blank">让你的微信不再被人撤回消息</a>&nbsp;(CallMeWhy)</li>
-	 <li><a href="http://drops.wooyun.org/mobile/15406" target="_blank">微信双开还是微信定时炸弹？</a>&nbsp;(CallMeWhy)</li>
-	 </ul>
-
-	 <h3>瞎推荐</h3>
-
-	 <ul>
-	 <li><a href="http://blog.csdn.net/shenyisyn/article/details/50056319" target="_blank">阻碍新手程序员提升的8件小事</a>&nbsp;(LHF)</li>
-	 <li><a href="http://36kr.com/p/5046775.html" target="_blank">程序员、黑客与开发者之别</a>&nbsp;(LHF)</li>
-	 </ul>
-
-	 <h3>拓展资源</h3>
-
-	 <ul>
-	 <li><a href="http://www.wxtlife.com/2016/04/25/java-jvm-gc/" target="_blank">详细介绍了java jvm 垃圾回收相关的知识汇总</a>&nbsp;(Aaron)</li>
-	 <li><a href="http://arondight.me/2016/04/17/%E4%BD%BF%E7%94%A8GPG%E7%AD%BE%E5%90%8DGit%E6%8F%90%E4%BA%A4%E5%92%8C%E6%A0%87%E7%AD%BE/" target="_blank">使用GPG签名Git提交和标签</a>&nbsp;(蒋朋)</li>
-	 </ul>
-
-	 <h3>休息视频</h3>
-
-	 <ul>
-	 <li><a href="http://weibo.com/p/2304443956b04478364a64185f196f0a89266d" target="_blank">秒拍牛人大合集，[笑cry]目测膝盖根本不够用啊。</a>&nbsp;(LHF)</li>
-	 </ul>
-
-	 <p><iframe frameborder="0" height="498" src="http://v.qq.com/iframe/player.html?vid=w0198nyi5x5&amp;tiny=0&amp;auto=0" width="640"></iframe></p>
-
-	 <p>感谢所有默默付出的编辑们,愿大家有美好一天.</p>
-
-	 * publishedAt : 2016-05-11T12:11:00.0Z
-	 * title : 秒拍牛人大集合，看到哪个你跪了
-	 */
-
-	private String _id;
-	private String content;
-	private String publishedAt;
-	private String title;
-
-	public String get_id() {
-		return _id;
+	public List<AndroidBean> getAndroid() {
+		return Android;
 	}
 
-	public void set_id(String _id) {
-		this._id = _id;
+	public void setAndroid(List<AndroidBean> Android) {
+		this.Android = Android;
 	}
 
-	public String getContent() {
-		return content;
+	public List<IOSBean> getIOS() {
+		return iOS;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setIOS(List<IOSBean> iOS) {
+		this.iOS = iOS;
 	}
 
-	public String getPublishedAt() {
-		return publishedAt;
+	public List<休息视频Bean> get休息视频() {
+		return 休息视频;
 	}
 
-	public void setPublishedAt(String publishedAt) {
-		this.publishedAt = publishedAt;
+	public void set休息视频(List<休息视频Bean> 休息视频) {
+		this.休息视频 = 休息视频;
 	}
 
-	public String getTitle() {
-		return title;
+	public List<拓展资源Bean> get拓展资源() {
+		return 拓展资源;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void set拓展资源(List<拓展资源Bean> 拓展资源) {
+		this.拓展资源 = 拓展资源;
+	}
+
+	public List<瞎推荐Bean> get瞎推荐() {
+		return 瞎推荐;
+	}
+
+	public void set瞎推荐(List<瞎推荐Bean> 瞎推荐) {
+		this.瞎推荐 = 瞎推荐;
+	}
+
+	public List<福利Bean> get福利() {
+		return 福利;
+	}
+
+	public void set福利(List<福利Bean> 福利) {
+		this.福利 = 福利;
+	}
+
+	public static class AndroidBean {
+		/**
+		 * _id : 56cc6d23421aa95caa707a69
+		 * createdAt : 2015-08-06T07:15:52.65Z
+		 * desc : 类似Link Bubble的悬浮式操作设计
+		 * publishedAt : 2015-08-07T03:57:48.45Z
+		 * type : Android
+		 * url : https://github.com/recruit-lifestyle/FloatingView
+		 * used : true
+		 * who : mthli
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
+	}
+
+	public static class IOSBean {
+		/**
+		 * _id : 56cc6d1d421aa95caa707769
+		 * createdAt : 2015-08-07T01:32:51.588Z
+		 * desc : LLVM 简介
+		 * publishedAt : 2015-08-07T03:57:48.70Z
+		 * type : iOS
+		 * url : http://adriansampson.net/blog/llvm.html
+		 * used : true
+		 * who : CallMeWhy
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
+	}
+
+	public static class 休息视频Bean {
+		/**
+		 * _id : 56cc6d23421aa95caa707c68
+		 * createdAt : 2015-08-06T13:06:17.211Z
+		 * desc : 听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址
+		 http://v.youku.com/v_show/id_XMTQxODA5NDM2.html
+		 * publishedAt : 2015-08-07T03:57:48.104Z
+		 * type : 休息视频
+		 * url : http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button
+		 * used : true
+		 * who : lxxself
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
+	}
+
+	public static class 拓展资源Bean {
+		/**
+		 * _id : 56cc6d23421aa95caa707bdf
+		 * createdAt : 2015-08-07T01:36:06.932Z
+		 * desc : Display GitHub code in tree format
+		 * publishedAt : 2015-08-07T03:57:48.81Z
+		 * type : 拓展资源
+		 * url : https://github.com/buunguyen/octotree
+		 * used : true
+		 * who : lxxself
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
+	}
+
+	public static class 瞎推荐Bean {
+		/**
+		 * _id : 56cc6d23421aa95caa707bd0
+		 * createdAt : 2015-08-07T01:52:30.267Z
+		 * desc : 程序员的电台FmM，这个页面chrome插件有问题啊哭，我写了回删除不了啊
+		 * publishedAt : 2015-08-07T03:57:48.84Z
+		 * type : 瞎推荐
+		 * url : https://cmd.fm/
+		 * used : true
+		 * who : lxxself
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
+	}
+
+	public static class 福利Bean {
+		/**
+		 * _id : 56cc6d23421aa95caa707c52
+		 * createdAt : 2015-08-07T01:21:06.112Z
+		 * desc : 8.7——（1）
+		 * publishedAt : 2015-08-07T03:57:47.310Z
+		 * type : 福利
+		 * url : http://ww2.sinaimg.cn/large/7a8aed7bgw1eutscfcqtcj20dw0i0q4l.jpg
+		 * used : true
+		 * who : 张涵宇
+		 */
+
+		private String _id;
+		private String createdAt;
+		private String desc;
+		private String publishedAt;
+		private String type;
+		private String url;
+		private boolean used;
+		private String who;
+
+		public String get_id() {
+			return _id;
+		}
+
+		public void set_id(String _id) {
+			this._id = _id;
+		}
+
+		public String getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(String createdAt) {
+			this.createdAt = createdAt;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getPublishedAt() {
+			return publishedAt;
+		}
+
+		public void setPublishedAt(String publishedAt) {
+			this.publishedAt = publishedAt;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public boolean isUsed() {
+			return used;
+		}
+
+		public void setUsed(boolean used) {
+			this.used = used;
+		}
+
+		public String getWho() {
+			return who;
+		}
+
+		public void setWho(String who) {
+			this.who = who;
+		}
 	}
 }

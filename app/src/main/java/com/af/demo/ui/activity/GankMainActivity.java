@@ -2,15 +2,14 @@ package com.af.demo.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.af.demo.R;
 import com.af.demo.api.Bean.GankIoDayDataBean;
 import com.af.demo.api.GankIoRepository;
-import com.af.demo.ui.PullScrollView;
 import com.af.lib.app.AFManager;
 import com.af.lib.app.RepositoryManager;
 import com.af.lib.base.BaseActivity;
@@ -21,6 +20,10 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.blankj.utilcode.util.TimeUtils;
+import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.text.SimpleDateFormat;
@@ -44,17 +47,15 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @description:
  */
-public class GankMainActivity extends BaseActivity implements PullScrollView.RefreshListener {
+public class GankMainActivity extends BaseActivity implements OnRefreshListener, OnNetWorkErrorListener {
 
 
 	@BindView(R.id.tv_select_date)
 	TextView tvSelectDate;
-
-	@BindView(R.id.webView)
-	WebView mWebView;
-	@BindView(R.id.pull_refresh)
-	PullScrollView mPullRefresh;
-
+	@BindView(R.id.rv_day_list)
+	LRecyclerView mRvDayList;
+	@BindView(R.id.empty_view)
+	RelativeLayout mEmptyView;
 
 	private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private String mCurrentDate;
@@ -72,19 +73,15 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 		ButterKnife.bind(this);
 		mCurrentDate = TimeUtils.getNowString(mSimpleDateFormat);
 		mProgressDialog = ProgressDialog.getInstance(true);
-		mPullRefresh.setRefreshListener(this);
-//支持javascript
-		mWebView.getSettings().setJavaScriptEnabled(true);
-// 设置可以支持缩放
-		mWebView.getSettings().setSupportZoom(true);
-// 设置出现缩放工具
-		mWebView.getSettings().setBuiltInZoomControls(true);
-//扩大比例的缩放
-		mWebView.getSettings().setUseWideViewPort(true);
-//自适应屏幕
-		mWebView.getSettings().setLoadWithOverviewMode(true);
-		mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-		mWebView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+		mRvDayList.setOnRefreshListener(this);
+		mRvDayList.setOnNetWorkErrorListener(this);
+		mRvDayList.setEmptyView(mEmptyView);
+		mRvDayList.setLoadMoreEnabled(false);
+		mRvDayList.setLayoutManager(new LinearLayoutManager(this));
+
+		LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter();
+		mRvDayList.setAdapter();
 	}
 
 	@Override
@@ -108,9 +105,7 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 						} else {
 							/*String css = "<style type=\"text/css\"> </style>";
 							String html = "<html><header><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=0.8, user-scalable=no>"+css+"</header>"+"<body>"+mDataBeanResults.get(0).getContent()+"</body>"+"</html>";*/
-							mWebView.loadDataWithBaseURL(null,mDataBeanResults.get(0).getContent(), "text/html", "UTF-8",null);
 						}
-						mPullRefresh.setRefreshCompleted();
 					}
 				});
 
@@ -135,7 +130,6 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 				@Override
 				public void onTimeSelect(Date date, View v) {
 					mCurrentDate = TimeUtils.date2String(date, mSimpleDateFormat);
-					mPullRefresh.refreshWithPull();
 				}
 			}).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
 					.build();
@@ -146,5 +140,10 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 	@Override
 	public void onRefresh() {
 		getDayDate(mCurrentDate);
+	}
+
+	@Override
+	public void reload() {
+
 	}
 }

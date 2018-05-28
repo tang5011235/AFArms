@@ -27,32 +27,15 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <!--<com.classic.common.MultipleStatusView
-        android:id="@+id/msv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:emptyView="@layout/empty_view"
-        app:errorView="@layout/error_view"
-        app:noNetworkView="@layout/no_network_view"
-        >
-
-        <TextView
-            android:background="#f0f"
-            android:id="@+id/tv_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.classic.common.MultipleStatusView>-->
-
-    <com.af.demo.ui.PullScrollView
-        android:id="@+id/pull_refresh"
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/rv_day_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
 
-        </WebView>
-    </com.af.demo.ui.PullScrollView>
+    <include
+        android:visibility="gone"
+        android:id="@+id/empty_view"
+        layout="@layout/empty_view"/>
 </LinearLayout>

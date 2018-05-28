@@ -17,6 +17,6 @@ public interface GankIoServices {
      * @param date
      * @return
      */
-    @GET("history/content/day/{date}")
+    @GET("day/{date}")
     Observable<GankIoDayDataBean> getDayData(@Path("date") String date);
 }
