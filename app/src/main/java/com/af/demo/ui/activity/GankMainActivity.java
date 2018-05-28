@@ -84,6 +84,7 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 //自适应屏幕
 		mWebView.getSettings().setLoadWithOverviewMode(true);
 		mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+		mWebView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 	}
 
 	@Override
@@ -105,9 +106,9 @@ public class GankMainActivity extends BaseActivity implements PullScrollView.Ref
 						mDataBeanResults = gankIoDayDataBean.getResults();
 						if (mDataBeanResults.size() == 0) {
 						} else {
-							String css = "<style type=\"text/css\"> </style>";
-							String html = "<html><header><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=0.8, user-scalable=no>"+css+"</header>"+"<body>"+mDataBeanResults.get(0).getContent()+"</body>"+"</html>";
-							mWebView.loadDataWithBaseURL(null,html, "text/html", "UTF-8",null);
+							/*String css = "<style type=\"text/css\"> </style>";
+							String html = "<html><header><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=0.8, user-scalable=no>"+css+"</header>"+"<body>"+mDataBeanResults.get(0).getContent()+"</body>"+"</html>";*/
+							mWebView.loadDataWithBaseURL(null,mDataBeanResults.get(0).getContent(), "text/html", "UTF-8",null);
 						}
 						mPullRefresh.setRefreshCompleted();
 					}
