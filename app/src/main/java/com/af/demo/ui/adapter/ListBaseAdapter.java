@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * 封装adapter（注意：仅供参考，根据需要选择使用demo中提供的封装adapter）
+ *
  * @param <T>
  */
 public abstract class ListBaseAdapter<T> extends RecyclerView.Adapter<SuperViewHolder> {
@@ -38,7 +39,14 @@ public abstract class ListBaseAdapter<T> extends RecyclerView.Adapter<SuperViewH
         onBindItemHolder(holder, position);
     }
 
-    //局部刷新关键：带payload的这个onBindViewHolder方法必须实现
+
+    /**
+     * 局部刷新关键：带payload的这个onBindViewHolder方法必须实现
+     *
+     * @param holder ViewHolder
+     * @param position 位置索引
+     * @param payloads 数据
+     */
     @Override
     public void onBindViewHolder(SuperViewHolder holder, int position, List<Object> payloads) {
         if (payloads.isEmpty()) {
@@ -53,7 +61,7 @@ public abstract class ListBaseAdapter<T> extends RecyclerView.Adapter<SuperViewH
 
     public abstract void onBindItemHolder(SuperViewHolder holder, int position);
 
-    public void onBindItemHolder(SuperViewHolder holder, int position, List<Object> payloads){
+    public void onBindItemHolder(SuperViewHolder holder, int position, List<Object> payloads) {
 
     }
 
@@ -72,6 +80,11 @@ public abstract class ListBaseAdapter<T> extends RecyclerView.Adapter<SuperViewH
         notifyDataSetChanged();
     }
 
+    /**
+     * 添加数据到集合
+     *
+     * @param list 即将添加的数据
+     */
     public void addAll(Collection<T> list) {
         int lastIndex = this.mDataList.size();
         if (this.mDataList.addAll(list)) {
@@ -79,15 +92,23 @@ public abstract class ListBaseAdapter<T> extends RecyclerView.Adapter<SuperViewH
         }
     }
 
+    /**
+     * 移除制定位置数据
+     *
+     * @param position 位置索引
+     */
     public void remove(int position) {
         this.mDataList.remove(position);
         notifyItemRemoved(position);
 
-        if(position != (getDataList().size())){ // 如果移除的是最后一个，忽略
-            notifyItemRangeChanged(position,this.mDataList.size()-position);
+        if (position != (getDataList().size())) { // 如果移除的是最后一个，忽略
+            notifyItemRangeChanged(position, this.mDataList.size() - position);
         }
     }
 
+    /**
+     * 清空列表中所有数据
+     */
     public void clear() {
         mDataList.clear();
         notifyDataSetChanged();
