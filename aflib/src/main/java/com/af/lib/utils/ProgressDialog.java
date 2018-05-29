@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.af.lib.R;
-import com.trello.rxlifecycle2.components.RxDialogFragment;
+import com.trello.rxlifecycle2.components.support.RxDialogFragment;
 
 /**
  * 作者：thf on 2018/5/7 0007 15:16

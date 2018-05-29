@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void showProgress() {
-        mProgressDialog.show(getFragmentManager(), "a");
+        mProgressDialog.show(getSupportFragmentManager(),"a");
     }
 
     @Override
