@@ -7,8 +7,7 @@ import com.af.demo.R;
 import com.af.demo.api.Bean.GankIoDayDataBean;
 import com.af.demo.api.Bean.GankIoDayDataMultpleItem;
 import com.af.demo.ui.holder.SuperViewHolder;
-
-import java.util.List;
+import com.blankj.utilcode.util.StringUtils;
 
 /**
  * 作者：thf on 2018/5/28 0028 14:51
@@ -21,46 +20,51 @@ import java.util.List;
  *
  * @description:
  */
-public class GankIoDayDateAdapter extends BaseMultiAdapter<GankIoDayDataBean> {
+public class GankIoDayDateAdapter extends BaseMultiAdapter<GankIoDayDataMultpleItem> {
 
-    public GankIoDayDateAdapter(Context context, List<GankIoDayDataBean> list) {
-        super(context);
-        addItemType(GankIoDayDataMultpleItem.TITLE, R.layout.adapter_title_gank_io_day_data);
-        addItemType(GankIoDayDataMultpleItem.CONTENT, R.layout.adapter_content_gank_io_day_data);
-        addItemType(GankIoDayDataMultpleItem.IMG, R.layout.adapter_image_list);
-    }
+	public GankIoDayDateAdapter(Context context) {
+		super(context);
+		addItemType(GankIoDayDataMultpleItem.TITLE, R.layout.adapter_title_gank_io_day_data);
+		addItemType(GankIoDayDataMultpleItem.CONTENT, R.layout.adapter_content_gank_io_day_data);
+		addItemType(GankIoDayDataMultpleItem.IMG, R.layout.adapter_image_list);
+	}
 
-    @Override
-    public void onBindItemHolder(SuperViewHolder holder, int position) {
-        GankIoDayDataBean item = mDataList.get(position);
-        switch (item.getItemType()) {
-            case GankIoDayDataMultpleItem.TITLE:
-                bindTitle(holder, item);
-                break;
-            case GankIoDayDataMultpleItem.CONTENT:
-                bindContent(holder, item);
-                break;
-            case GankIoDayDataMultpleItem.IMG:
-                bindImage(holder, item);
-                break;
-            default:
+	@Override
+	public void onBindItemHolder(SuperViewHolder holder, int position) {
+		GankIoDayDataMultpleItem multpleItem = mDataList.get(position);
+		switch (multpleItem.getItemType()) {
+			case GankIoDayDataMultpleItem.TITLE:
+				bindTitle(holder, multpleItem);
+				break;
+			case GankIoDayDataMultpleItem.CONTENT:
+				bindContent(holder, multpleItem);
+				break;
+			case GankIoDayDataMultpleItem.IMG:
+				bindImage(holder, multpleItem);
+				break;
+			default:
 
-                break;
-        }
-    }
+				break;
+		}
+	}
 
-    private void bindTitle(SuperViewHolder holder, GankIoDayDataBean item) {
-        TextView tvTitle = holder.getView(R.id.tv_title);
-        tvTitle.setText();
-    }
+	private void bindTitle(SuperViewHolder holder, GankIoDayDataMultpleItem item) {
+		TextView tvTitle = holder.getView(R.id.tv_title);
+		tvTitle.setText("●  " + ((item.getData().toString()).trim()));
+	}
 
-    private void bindContent(SuperViewHolder holder, GankIoDayDataBean item) {
-        TextView tvDesc = holder.getView(R.id.tv_desc);
-        tvDesc.setText(item.get);
-    }
+	private void bindContent(SuperViewHolder holder, GankIoDayDataMultpleItem item) {
+		TextView tvDesc = holder.getView(R.id.tv_desc);
+		TextView tvAuthor = holder.getView(R.id.tv_author);
+		GankIoDayDataBean.ItemBean itemData = (GankIoDayDataBean.ItemBean) item.getData();
+		tvDesc.setText(itemData.getDesc());
+		if (!StringUtils.isEmpty(itemData.getWho())) {
+			tvAuthor.setText("(" + itemData.getWho().trim() + ")");
+		}
+	}
 
 
-    private void bindImage(SuperViewHolder holder, GankIoDayDataBean item) {
+	private void bindImage(SuperViewHolder holder, GankIoDayDataMultpleItem item) {
 
-    }
+	}
 }

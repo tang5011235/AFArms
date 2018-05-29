@@ -2,11 +2,14 @@ package com.af.demo.api.Bean;
 
 import com.af.lib.http.response.interfaces.IResponse;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/27.
  */
 
 public class BaseResponse<T> implements IResponse{
+    private List<String> category;
     private int code = 200;
     private String message;
     private boolean erro;
@@ -39,4 +42,11 @@ public class BaseResponse<T> implements IResponse{
         this.results = results;
     }
 
+    public List<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
+    }
 }

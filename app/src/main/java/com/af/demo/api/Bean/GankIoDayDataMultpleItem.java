@@ -35,13 +35,13 @@ public class GankIoDayDataMultpleItem implements MultiItemEntity{
         return itemType;
     }
 
-    private String title;
+    private Object data;
 
-    public String getTitle() {
-        return title;
+    public Object getData() {
+        return data;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setData(Object data) {
+        this.data = data;
     }
 }
