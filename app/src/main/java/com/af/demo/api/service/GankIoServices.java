@@ -1,5 +1,6 @@
 package com.af.demo.api.service;
 
+import com.af.demo.api.Bean.CategoryListBean;
 import com.af.demo.api.Bean.FuLiBean;
 import com.af.demo.api.Bean.GankIoDayDataBean;
 
@@ -29,5 +30,5 @@ public interface GankIoServices {
 	 * @return
 	 */
 	@GET("data/{type}/10/{pageNum}")
-	Observable<GankIoDayDataBean> getDayData(@Path("type") String type, @Path("pageNum") String pageNum);
+	Observable<CategoryListBean> getCategoryListData(@Path("type") String type, @Path("pageNum") int pageNum);
 }
