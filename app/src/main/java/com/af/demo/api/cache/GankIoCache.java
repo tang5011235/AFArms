@@ -25,6 +25,7 @@ public interface GankIoCache {
 
 	/**
 	 * 获取指定日期数据
+	 *
 	 * @param observable
 	 * @param dynamicKey
 	 * @param evictProvider
@@ -34,4 +35,15 @@ public interface GankIoCache {
 	Observable<Reply<GankIoDayDataBean>> getDayData(Observable<GankIoDayDataBean> observable,
 	                                                DynamicKey dynamicKey,
 	                                                EvictProvider evictProvider);
+
+
+	/**
+	 * 获取类型的数据
+	 *
+	 * @param type
+	 * @param pageNum
+	 * @return
+	 */
+	@LifeCache(duration = 15, timeUnit = TimeUnit.DAYS)
+	Observable<GankIoDayDataBean> getDayData(String type, String pageNum);
 }

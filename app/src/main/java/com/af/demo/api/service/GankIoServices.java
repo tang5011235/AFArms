@@ -8,15 +8,26 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface GankIoServices {
-    @GET("fuli")
-    Observable<FuLiBean> getFuLi();
+	@GET("fuli")
+	Observable<FuLiBean> getFuLi();
 
 
-    /**
-     * 获取指定日起的数据
-     * @param date
-     * @return
-     */
-    @GET("day/{date}")
-    Observable<GankIoDayDataBean> getDayData(@Path("date") String date);
+	/**
+	 * 获取指定日起的数据
+	 *
+	 * @param date
+	 * @return
+	 */
+	@GET("day/{date}")
+	Observable<GankIoDayDataBean> getDayData(@Path("date") String date);
+
+	/**
+	 * 获取类型的数据
+	 *
+	 * @param type
+	 * @param pageNum
+	 * @return
+	 */
+	@GET("data/{type}/10/{pageNum}")
+	Observable<GankIoDayDataBean> getDayData(@Path("type") String type, @Path("pageNum") String pageNum);
 }
