@@ -12,7 +12,7 @@ public class BaseResponse<T> implements IResponse{
     private List<String> category;
     private int code = 200;
     private String message;
-    private boolean erro;
+    private boolean error;
     private T results;
 
     @Override
@@ -30,8 +30,8 @@ public class BaseResponse<T> implements IResponse{
         return code == 200;
     }
 
-    public void setErro(boolean erro) {
-        this.erro = erro;
+    public void setError(boolean error) {
+        this.error = error;
     }
 
     public T getResults() {

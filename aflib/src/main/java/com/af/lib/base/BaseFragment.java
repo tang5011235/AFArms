@@ -17,6 +17,8 @@ import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -25,6 +27,11 @@ public abstract class BaseFragment extends SupportFragment implements LifecycleP
 
 	protected AppComponent mAppComponent;
 	protected View mRootView;
+	/**
+	 * 开启Butterknife
+	 */
+	protected boolean isUseButterKnife = true;
+	private Unbinder mButterKnifeUnbinder;
 
 
 	@Override
@@ -38,14 +45,20 @@ public abstract class BaseFragment extends SupportFragment implements LifecycleP
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		mRootView = initView(inflater, container, savedInstanceState);
+		if (isUseButterKnife) {
+			mButterKnifeUnbinder = ButterKnife.bind(this, mRootView);
+		}
 		return mRootView;
 	}
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		initViews();
 		loadData();
 	}
+
+	protected abstract void initViews();
 
 	/**
 	 * 空实现用于activity
@@ -132,5 +145,8 @@ public abstract class BaseFragment extends SupportFragment implements LifecycleP
 	public void onDetach() {
 		lifecycleSubject.onNext(FragmentEvent.DETACH);
 		super.onDetach();
+		if (mButterKnifeUnbinder != null) {
+			mButterKnifeUnbinder.unbind();
+		}
 	}
 }

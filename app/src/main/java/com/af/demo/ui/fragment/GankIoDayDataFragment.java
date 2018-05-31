@@ -39,9 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
@@ -67,7 +65,6 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	RelativeLayout mEmptyView;
 	@BindView(R.id.empty_view_tv)
 	TextView mEmptyViewTv;
-	Unbinder unbinder;
 
 	private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private String mCurrentDate;
@@ -96,7 +93,7 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	}
 
 	@Override
-	public void loadData() {
+	protected void initViews() {
 		mCurrentDate = TimeUtils.getNowString(mSimpleDateFormat);
 		mProgressDialog = ProgressDialog.getInstance(true);
 		mRvDayList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,13 +111,17 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 		mRvDayList.setOnNetWorkErrorListener(this);
 		mRvDayList.setLoadMoreEnabled(false);
 
+	}
+
+
+	@Override
+	public void loadData() {
 		getDayDate(mCurrentDate);
 	}
 
 	@Override
 	public View initView(@android.support.annotation.NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View inflate = inflater.inflate(R.layout.fragment_gank_io_day_data, container, false);
-		unbinder = ButterKnife.bind(this, inflate);
 		return inflate;
 	}
 
@@ -215,21 +216,22 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 		mProgressDialog.dismiss();
 	}
 
+	/**
+	 * 下拉刷新
+	 */
 	@Override
 	public void onRefresh() {
 		mItemEntities.clear();
 		getDayDate(mCurrentDate);
 	}
 
+	/**
+	 * 网络错误重点
+	 */
 	@Override
 	public void reload() {
 		mItemEntities.clear();
 		getDayDate(mCurrentDate);
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
 }

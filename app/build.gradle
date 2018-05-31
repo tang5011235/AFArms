@@ -53,4 +53,5 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'com.android.support:cardview-v7:27.0.2'
 
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }
