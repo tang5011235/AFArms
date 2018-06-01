@@ -47,7 +47,7 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements OnRe
     public final static String TYPE = "type";
 
     private String type;
-    private int pageNum;
+    private int pageNum = 1;
     private int totalPageNum;
     private CategoryListAdapter mDataAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
@@ -85,6 +85,7 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements OnRe
         mRvDataList.setAdapter(mLRecyclerViewAdapter);
         mRvDataList.setOnRefreshListener(this);
         mRvDataList.setOnLoadMoreListener(this);
+        mRvDataList.setNestedScrollingEnabled(false);
 
     }
 
@@ -101,7 +102,7 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements OnRe
     public void getCategoryListData() {
         AFManager.getService(RepositoryManager.class)
                 .creatRepository(GankIoRepository.class)
-                .getCategoryListData(type, pageNum, false)
+                .getCategoryListData(type, pageNum, true)
                 .subscribeOn(Schedulers.io())
                 .compose(this.bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -110,7 +111,7 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements OnRe
                     public void onNext(CategoryListBean categoryListBean) {
                         mDataAdapter.addAll(categoryListBean.getResults());
                         mRvDataList.refreshComplete(10);
-                        mDataAdapter.notifyDataSetChanged();
+                        mLRecyclerViewAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -143,9 +144,8 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements OnRe
 
     @Override
     public void onRefresh() {
-        pageNum = 0;
-        mDataAdapter.clear();
-        mLRecyclerViewAdapter.notifyDataSetChanged();
+        pageNum = 1;
+        mDataAdapter.getDataList().clear();
         getCategoryListData();
     }
 

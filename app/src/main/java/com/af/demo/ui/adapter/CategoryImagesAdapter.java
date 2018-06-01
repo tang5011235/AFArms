@@ -32,8 +32,9 @@ public class CategoryImagesAdapter extends ListBaseAdapter<String> {
 
 	@Override
 	public void onBindItemHolder(SuperViewHolder holder, int position) {
+		ImageView imageView = holder.getView(R.id.image_view);
 		AFManager.getService(ImageLoder.class)
-				.loadImage((ImageView) holder.getView(R.id.iv), new ImageConfigImp.Builder()
+				.loadImage(imageView, new ImageConfigImp.Builder()
 						.setUrl(mDataList.get(position))
 						.build());
 	}

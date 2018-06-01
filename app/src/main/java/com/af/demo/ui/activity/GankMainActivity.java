@@ -62,6 +62,7 @@ public class GankMainActivity extends BaseActivity implements TabLayout.OnTabSel
 		mFragments = new ArrayList<>();
 		mFragments.add(GankIoDayDataFragment.getInstance("每日"));
 		mFragments.add(GankIoCategoryFragment.getInstance("分类"));
+
 		loadMultipleRootFragment(R.id.container,
 				0,
 				mFragments.get(0),

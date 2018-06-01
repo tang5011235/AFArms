@@ -62,8 +62,9 @@ public class GankIoCategoryFragment extends BaseFragment {
     protected void initViews() {
         initFragmentList();
 
-        mVpCategory.setAdapter(new CategoryAdapter(getFragmentManager(), mFragmentList));
+        mVpCategory.setAdapter(new CategoryAdapter(getChildFragmentManager(), mFragmentList));
         mTablayoutCategory.setViewPager(mVpCategory);
+        mVpCategory.setOffscreenPageLimit(mFragmentList.size());
     }
 
     /**
