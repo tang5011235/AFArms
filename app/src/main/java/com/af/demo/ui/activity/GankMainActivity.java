@@ -6,8 +6,6 @@ import com.af.demo.R;
 import com.af.demo.ui.fragment.MainFragment;
 import com.af.lib.base.BaseActivity;
 
-import butterknife.ButterKnife;
-
 /**
  * 作者：thf on 2018/5/28 0028 11:57
  * <p>
@@ -29,8 +27,6 @@ public class GankMainActivity extends BaseActivity {
 
 	@Override
 	public void initView(Bundle savedInstanceState) {
-		ButterKnife.bind(this);
-
 		if (findFragment(MainFragment.class) == null) {
 			loadRootFragment(R.id.container, MainFragment.getInstance("主页面"));
 		}

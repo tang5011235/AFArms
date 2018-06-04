@@ -108,6 +108,7 @@ public class GankIoDayDataFragment extends BaseFragment implements com.scwang.sm
 		mDateAdapter.setEnableLoadMore(false);
 		mDateAdapter.addHeaderView(headerView);
 		mDateAdapter.setEmptyView(emptyView);
+		mDateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
 
 		mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 			@Override
