@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.af.demo.R;
@@ -26,11 +26,11 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.blankj.utilcode.util.TimeUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.text.SimpleDateFormat;
@@ -45,6 +45,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * @author thf
  * 作者：thf on 2018/5/29 0029 11:53
  * <p>
  * 邮箱：tang5011235@163.com
@@ -55,24 +56,21 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @description:
  */
-public class GankIoDayDataFragment extends BaseFragment implements OnRefreshListener, OnNetWorkErrorListener {
+public class GankIoDayDataFragment extends BaseFragment implements com.scwang.smartrefresh.layout.listener.OnRefreshListener, OnLoadMoreListener {
 
 	@BindView(R.id.tv_select_date)
 	TextView tvSelectDate;
 	@BindView(R.id.rv_day_list)
-	LRecyclerView mRvDayList;
-	@BindView(R.id.empty_view)
-	RelativeLayout mEmptyView;
-	@BindView(R.id.empty_view_tv)
-	TextView mEmptyViewTv;
+	RecyclerView mRvDayList;
+	@BindView(R.id.smart_refresh_layout)
+	SmartRefreshLayout mSmartRefreshLayout;
 
 	private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private String mCurrentDate;
 	private ProgressDialog mProgressDialog;
 	private TimePickerView mTimePickerView;
 
-	private List<GankIoDayDataMultpleItem> mItemEntities = new ArrayList<>();
-	private LRecyclerViewAdapter mLRecyclerViewAdapter;
+	private List<GankIoDayDataMultpleItem> mDataLists = new ArrayList<>();
 	private PhotoView mIvFuli;
 	private GankIoDayDateAdapter mDateAdapter;
 
@@ -96,21 +94,30 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	protected void initViews() {
 		mCurrentDate = TimeUtils.getNowString(mSimpleDateFormat);
 		mProgressDialog = ProgressDialog.getInstance(true);
+
+		mSmartRefreshLayout.setOnRefreshListener(this);
+		mSmartRefreshLayout.setOnLoadMoreListener(this);
+		mSmartRefreshLayout.setEnableLoadMore(false);
+
 		mRvDayList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-		mDateAdapter = new GankIoDayDateAdapter(getContext());
-		mRvDayList.setEmptyView(mEmptyView);
-		mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDateAdapter);
+		mDateAdapter = new GankIoDayDateAdapter(mDataLists);
 		View headerView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_header_gank_io_day_data, (ViewGroup) getActivity().findViewById(android.R.id.content), false);
+		View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.empty_view, (ViewGroup) getActivity().findViewById(android.R.id.content), false);
 		mIvFuli = headerView.findViewById(R.id.iv_fuli);
-		mLRecyclerViewAdapter.addHeaderView(headerView);
+		mDateAdapter.setEnableLoadMore(false);
+		mDateAdapter.addHeaderView(headerView);
+		mDateAdapter.setEmptyView(emptyView);
 
-		mRvDayList.setAdapter(mLRecyclerViewAdapter);
-
-		mRvDayList.setOnRefreshListener(this);
-		mRvDayList.setOnNetWorkErrorListener(this);
-		mRvDayList.setLoadMoreEnabled(false);
-
+		mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+				if(mDataLists.get(position).getItemType() == GankIoDayDataMultpleItem.CONTENT){
+					((MainFragment)getParentFragment()).start(DetailWebViewFragment.getInstance("详情",((GankIoDayDataBean.ItemBean)(mDataLists.get(position).getData())).getUrl()));
+				}
+			}
+		});
+		mRvDayList.setAdapter(mDateAdapter);
 	}
 
 
@@ -130,7 +137,7 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	private void getDayDate(String data) {
 		AFManager.getService(RepositoryManager.class)
 				.creatRepository(GankIoRepository.class)
-				.getDayData(data, false)
+				.getDayData(data, true)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.compose(GankIoDayDataFragment.this.bindUntilEvent(FragmentEvent.DESTROY))
@@ -139,18 +146,22 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 					public void onNext(GankIoDayDataBean gankIoDayDataBean) {
 						GankIoDayDataBean results = gankIoDayDataBean.getResults();
 						makeData(gankIoDayDataBean, results);
+						mDateAdapter.setNewData(mDataLists);
+						mSmartRefreshLayout.finishRefresh();
 					}
 
 					@Override
 					public void onError(@NonNull Throwable t) {
 						super.onError(t);
-						mRvDayList.refreshComplete(12);
+						mDateAdapter.setNewData(mDataLists);
+						mSmartRefreshLayout.finishRefresh();
 					}
 				});
 
 	}
 
 	private void makeData(GankIoDayDataBean gankIoDayDataBean, GankIoDayDataBean results) {
+		mDataLists.clear();
 		if (results != null && gankIoDayDataBean.getCategory().size() > 0) {
 			AFManager.getService(ImageLoder.class)
 					.loadImage(getActivity(), new ImageConfigImp.Builder()
@@ -164,11 +175,11 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 				if (i == 0) {
 					GankIoDayDataMultpleItem e = new GankIoDayDataMultpleItem(GankIoDayDataMultpleItem.TITLE);
 					e.setData("Android");
-					mItemEntities.add(e);
+					mDataLists.add(e);
 				} else {
 					GankIoDayDataMultpleItem e = new GankIoDayDataMultpleItem(GankIoDayDataMultpleItem.CONTENT);
 					e.setData(results.getAndroid().get(i));
-					mItemEntities.add(e);
+					mDataLists.add(e);
 				}
 			}
 
@@ -178,16 +189,14 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 				if (i == 0) {
 					GankIoDayDataMultpleItem e = new GankIoDayDataMultpleItem(GankIoDayDataMultpleItem.TITLE);
 					e.setData("IOS");
-					mItemEntities.add(e);
+					mDataLists.add(e);
 				} else {
 					GankIoDayDataMultpleItem e = new GankIoDayDataMultpleItem(GankIoDayDataMultpleItem.CONTENT);
 					e.setData(results.getIOS().get(i));
-					mItemEntities.add(e);
+					mDataLists.add(e);
 				}
 			}
 		}
-		mDateAdapter.setDataList(mItemEntities);
-		mRvDayList.refreshComplete(12);
 	}
 
 	@OnClick(R.id.tv_select_date)
@@ -198,7 +207,7 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 				@Override
 				public void onTimeSelect(Date date, View v) {
 					mCurrentDate = TimeUtils.date2String(date, mSimpleDateFormat);
-					mRvDayList.forceToRefresh();
+					mSmartRefreshLayout.autoRefresh();
 				}
 			}).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
 					.build();
@@ -220,8 +229,7 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	 * 下拉刷新
 	 */
 	@Override
-	public void onRefresh() {
-		mItemEntities.clear();
+	public void onRefresh(RefreshLayout refreshLayout) {
 		getDayDate(mCurrentDate);
 	}
 
@@ -229,9 +237,8 @@ public class GankIoDayDataFragment extends BaseFragment implements OnRefreshList
 	 * 网络错误重点
 	 */
 	@Override
-	public void reload() {
-		mItemEntities.clear();
+	public void onLoadMore(RefreshLayout refreshLayout) {
+		mDataLists.clear();
 		getDayDate(mCurrentDate);
 	}
-
 }

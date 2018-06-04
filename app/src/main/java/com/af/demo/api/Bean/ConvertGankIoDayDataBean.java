@@ -1,6 +1,6 @@
 package com.af.demo.api.Bean;
 
-import com.af.demo.ui.adapter.MultiItemEntity;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by HaoFeng on 2018/5/28 0028.
  */
 
-public class ConvertGankIoDayDataBean implements MultiItemEntity{
+public class ConvertGankIoDayDataBean implements MultiItemEntity {
     public static final int TITLE = 1;
     public static final int IMG = 2;
     public static final int CONTENT = 3;

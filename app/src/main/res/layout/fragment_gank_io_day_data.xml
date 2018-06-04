@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+        app:contentInsetStart="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff000">
+        android:background="@color/colorPrimary">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,25 +21,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_18"
+                android:layout_marginRight="18dp"
                 android:text="+"
                 android:textSize="40sp"/>
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/rv_day_list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_day_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-    <include
-        android:id="@+id/empty_view"
-        layout="@layout/empty_view"
-        android:visibility="gone"/>
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
 </LinearLayout>

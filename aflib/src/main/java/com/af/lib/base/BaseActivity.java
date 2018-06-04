@@ -19,6 +19,8 @@ import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -26,10 +28,18 @@ import me.yokeyword.fragmentation.SupportActivity;
 public abstract class BaseActivity extends SupportActivity implements LifecycleProvider<ActivityEvent>,IViewProcess {
     protected AppComponent mAppComponent;
     private @LayoutRes int mRootViewId;
+    /**
+     * 开启Butterknife
+     */
+    protected boolean isUseButterKnife = true;
+    private Unbinder mButterKnifeUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (isUseButterKnife) {
+            mButterKnifeUnbinder = ButterKnife.bind(this);
+        }
         mAppComponent = ((App) (this.getApplication())).getAppComponent();
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         mRootViewId = setRootViewId();
@@ -114,5 +124,8 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
     protected void onDestroy() {
         lifecycleSubject.onNext(ActivityEvent.DESTROY);
         super.onDestroy();
+        if (mButterKnifeUnbinder != null) {
+            mButterKnifeUnbinder.unbind();
+        }
     }
 }

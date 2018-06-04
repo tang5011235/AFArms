@@ -1,20 +1,19 @@
 package com.af.demo.ui.adapter;
 
-import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.af.demo.R;
 import com.af.demo.api.Bean.CategoryListBean;
-import com.af.demo.ui.holder.SuperViewHolder;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 作者：thf on 2018/5/31 0031 16:58
+ * 作者：thf on 2018/6/4 0004 09:18
  * <p>
  * 邮箱：tang5011235@163.com
  * <p>
@@ -24,38 +23,21 @@ import java.util.List;
  *
  * @description:
  */
-public class CategoryListAdapter extends ListBaseAdapter<CategoryListBean> {
-	private boolean isIinitRecyclerView = false;
+public class CategoryListAdapter extends BaseQuickAdapter<CategoryListBean, BaseViewHolder> {
 	private CategoryImagesAdapter mImagesAdapter;
-	private List<String> mImages;
 
-	public CategoryListAdapter(Context context) {
-		super(context);
+	public CategoryListAdapter(int layoutResId, @Nullable List<CategoryListBean> data) {
+		super(layoutResId, data);
 	}
 
 	@Override
-	public int getLayoutId() {
-		return R.layout.adapter_category_list;
-	}
-
-	@Override
-	public void onBindItemHolder(SuperViewHolder holder, int position) {
-		CategoryListBean bean = mDataList.get(position);
-		((TextView) holder.getView(R.id.tv_desc)).setText(bean.getDesc());
-		RecyclerView lRecyclerView = (RecyclerView) holder.getView(R.id.rv_images);
-		//只让RecyclerView走一次
-		if (bean.getUrl().endsWith(".jpg")) {//这是一个福利图片
-			mImages = new ArrayList<>(1);
-			mImages.add(bean.getUrl());
-
-		}
-
-
-		if (bean.getImages() != null && bean.getImages().size() > 0) {
+	protected void convert(BaseViewHolder helper, CategoryListBean item) {
+		RecyclerView lRecyclerView = (RecyclerView) helper.getView(R.id.rv_images);
+		helper.setText(R.id.tv_desc,item.getDesc());
+		if (item.getImages() != null && item.getImages().size() > 0) {
 			lRecyclerView.setVisibility(View.VISIBLE);
-			mImagesAdapter = new CategoryImagesAdapter(mContext);
-			mImages = bean.getImages();
-			mImagesAdapter.setDataList(mImages);
+			List<String> images = item.getImages();
+			mImagesAdapter = new CategoryImagesAdapter(R.layout.adapter_image_list,images);
 			lRecyclerView.setAdapter(mImagesAdapter);
 			lRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
 					RecyclerView.HORIZONTAL,

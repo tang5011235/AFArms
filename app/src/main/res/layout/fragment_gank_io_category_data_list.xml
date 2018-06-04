@@ -4,15 +4,17 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/rv_data_list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_data_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/empty_view"
-        layout="@layout/empty_view"
-        android:visibility="gone"/>
+        </android.support.v7.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>
