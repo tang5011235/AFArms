@@ -17,6 +17,7 @@ import com.af.lib.app.AFManager;
 import com.af.lib.app.RepositoryManager;
 import com.af.lib.base.BaseFragment;
 import com.af.lib.http.exception.rxjava.ErrorHandleSubscriber;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
@@ -85,6 +86,12 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements com.
 
 		mDataAdapter = new CategoryListAdapter(R.layout.adapter_category_list, mDataList);
 		mDataAdapter.setEnableLoadMore(false);
+		mDataAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+				((MainFragment)(getParentFragment().getParentFragment())).start(DetailWebViewFragment.getInstance("详情",mDataList.get(position).getUrl()));
+			}
+		});
 		mRvDataList.setAdapter(mDataAdapter);
 		mRvDataList.setNestedScrollingEnabled(false);
 	}
@@ -124,6 +131,7 @@ public class GankIoCategoryDataListFragment extends BaseFragment implements com.
 						if (size < 10) {
 							mSrl.setNoMoreData(true);
 						}
+						mDataList = mDataAdapter.getData();
 					}
 
 					@Override
